@@ -1,4 +1,4 @@
-THIS VERSION WILL NOT WORK ON WHMCS 5.2+, USE MASTER OR WHMCS-5.2 BRANCH.
+## THIS VERSION WILL NOT WORK ON WHMCS 5.2+, USE MASTER OR WHMCS-5.2 BRANCH.
 
 WHMCS 5.1 uses a different tag for the cookie that is saved, and a few other differences that make this version incompatible with WHMCS 5.2+
 
