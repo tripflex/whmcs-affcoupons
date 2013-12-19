@@ -85,14 +85,18 @@ if ((isset($_REQUEST['cmd'])) || (isset($_POST['cmd']))) {
 	}
 }
 
-print "<p class=\"heading2\">Landing Page</p>
-		<p class=\"heading3\" align=\"center\">$msg2</p>
+print "<div class=\"page-header\"><div class=\"styled_title\"><h2>Landing Page</h2></div></div>
+		<div class=\"styled_title\"><h3>$msg2</h3></div>
 		<form action=\"affiliates.php\" method=\"POST\" name=\"landingpage\">
-		<p align=\"center\">
-		This option will control where your referrals will be redirected after visiting your referral link.<br />
 		<input type=\"hidden\" name=\"cmd\" value=\"modlanding\">
-		Landing Page: <input type=\"text\" size=\"48\" name=\"landing\" value=\"$landing\">
-		<input type=\"submit\" name=\"Submit\" value=\"Modify\"></p></form>";
+		<div class=\"well textcenter\">
+			<input type=\"text\" name=\"landing\" id=\"landing\" value=\"$landing\" class=\"bigfield\">
+			<div class=\"internalpaadding\">
+				<p>This option will control where your referrals will be redirected after visiting your referral link.</p>
+				<input type=\"submit\" name=\"Submit\" value=\"Update\" class=\"btn btn-primary btn-large\"></form>
+			</div>
+		</div>
+		";
 // Get Existing Coupons
 $coupon = array();
 $sql = "SELECT p.code, p.type, p.value, p.uses, p.id
@@ -106,10 +110,16 @@ while ($r = mysql_fetch_array($data)) {
 	$coupon[$r[4]]['uses'] = $r[3];
 	$coupon[$r[4]]['id'] = $r[4];
 }
-print "<p class=\"heading2\">Your Coupons</p>
-		<p class=\"heading3\" align=\"center\">$msg</p>
-		<table align=\"center\" class=\"clientareatable\" cellspacing=\"1\">";
-print "<tr class=\"clientareatableheading\"><td>&nbsp;</td><td>Coupon Code</td><td>Coupon Type</td><td>Coupon Value</td><td>Uses</td></tr>";
+print "<div class=\"page-header\"><div class=\"styled_title\"><h2>Your Coupons</h2></div></div><div class=\"alert alert-success\"";
+
+// Don't display alert div if there is no message, probably need to switch this to use jquery later
+if (!$msg) print " style=\"display: none;\"";
+
+print ">$msg</div><table class=\"table table-striped table-framed\">";
+
+print "<thead><tr><th>&nbsp;</th><th>Coupon Code</th><th>Coupon Type</th><th>Coupon Value</th><th>Uses</th></tr></thead>";
+
+if (!$coupon) print "<tbody><tr><td></td><td>No Coupons Found</td></tr></tbody>";
 
 foreach ($coupon as $key => $val) {
 	$code = $val['code'];
@@ -117,13 +127,23 @@ foreach ($coupon as $key => $val) {
 	$value = $val['value'];
 	$uses = $val['uses'];
 	$id = $val['id'];
-	print "<tr class=\"clientareatableactive\"><td><a href=\"affiliates.php?cmd=del&cid=$id\"><img src=\"templates/default/images/delete.png\"></a></td><td>$code</td><td>$type</td><td>$value</td><td>$uses</td></tr>";
+	print "<tbody><tr><td><a href=\"affiliates.php?cmd=del&cid=$id\"><img src=\"templates/default/images/delete.png\"></a></td><td>$code</td><td>$type</td><td>$value</td><td>$uses</td></tr></tbody>";
 }
 print "</table>";
-print "<p class=\"heading2\">Add Coupons</p>";
-print "<form action=\"affiliates.php\" method=\"POST\" name=\"addcoupons\">
+print "<div class=\"page-header\"><div class=\"styled_title\"><h2>Add Coupons</h2></div></div>";
+print "<form action=\"affiliates.php\" method=\"POST\" name=\"addcoupons\" class=\"form-horizontal\">
 		<input type=\"hidden\" name=\"cmd\" value=\"add\">
-		<p align=\"center\">Coupon Code: <input type=\"text\" name=\"code\" value=\"\" size=\"30\"> Coupon Type: <select name=\"type\">";
+		<div class=\"well\">
+			<div class=\"control-group\">
+				<label for=\"code\" class=\"control-label\">Coupon Code:</label>
+				<div class=\"controls\">
+					<input type=\"text\" name=\"code\" id=\"code\">
+				</div>
+			</div>
+			<div class=\"control-group\">
+				<label for=\"code\" class=\"control-label\">Coupon Type:</label>
+				<div class=\"controls\">			
+					<select name=\"type\">";
 
 $data = select_query("tblaffcouponsconf", "*", array());
 while ($val = mysql_fetch_array($data)) {
@@ -142,5 +162,12 @@ while ($val = mysql_fetch_array($data)) {
 	$enc_string = base64_encode($string);
 	print "<option value=\"$enc_string\">$label</option>";
 }
-print "</select><input type=\"submit\" name=\"Submit\" value=\"Add\"></p></form>";
-?>
+print "</select>
+		</div>
+		</div>
+	<div class=\"control-group\">
+		<div class=\"controls\">
+			<input type=\"submit\" name=\"Submit\" value=\"Add\" class=\"btn btn-primary btn-large\">
+		</div>
+	</div>
+</div></form>";
