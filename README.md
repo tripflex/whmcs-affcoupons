@@ -3,6 +3,16 @@ Author: Myles McNamara (get@smyl.es)
 
 Based off of Affiliate Coupons 1.2 by Frank Laszlo (frank@asmallorange.com)
 
+### Screenshots
+<table>
+	<td width="50%">
+		<img src="https://smyl.es/img/Selection-1130x736-12.png" alt="Admin Area View">
+	</td>
+	<td width="50%">
+		<img src="https://smyl.es/img/Selection-1002x631-11.png" alt="Client Area Affiliates View">
+	</td>
+</table>
+
 ### Description
 
 This module will allow coupon codes to be used instead of affiliate URLs
