@@ -1,0 +1,21 @@
+Changes:
+
+-- v1.2 - 2010-8-14
+	
+	- Added admin interface (Utilities -> Addon Modules -> Affiliate Coupons)
+	- Created upgrade script to existing users
+	- Moved all configurations to a new database table
+	- Labels are now created by the admin, rather than generated
+	- Cleaned up code a bit
+	- Added donation link in admin interface
+
+-- v1.1 - 2010-7-28
+
+	- Added support for custom landing pages
+	- Removed all mysql_query() statements in favor of built-in WHMCS functions
+	- Cleaned up code
+	- Fixed a couple small bugs
+
+-- v1.0 - 2010-7-15
+
+	- Initial code written
