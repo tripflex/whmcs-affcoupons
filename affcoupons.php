@@ -1,8 +1,16 @@
 <?php
-/*
-	Affiliate Coupons 1.2 - WHMCS Module
-	Written by: Frank Laszlo <frank@asmallorange.com>
-*/
+/**
+ * @title Affliate Coupons Client Side
+ *
+ * @package    WHMCS 5.2.1+
+ * @author     Myles McNamara (get@smyl.es)
+ * @author     Frank Laszlo (frank@asmallorange.com)
+ * @copyright  Copyright (c) Myles McNamara 2013-2014
+ * @license    GNU GPL v3+
+ * @version    2.0
+ * @link       https://gh.smyl.es/whmcs-affcoupons
+ * 
+ */
 
 global $CONFIG;
 
