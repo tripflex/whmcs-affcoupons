@@ -1,5 +1,9 @@
 Changes:
 
+-- v2.0 - 2014-01-01
+	- Updated cookie ID to new ID for WHMCS 5.2+
+	- Updated and fixed HTML and CSS
+
 -- v1.2 - 2010-8-14
 	
 	- Added admin interface (Utilities -> Addon Modules -> Affiliate Coupons)
