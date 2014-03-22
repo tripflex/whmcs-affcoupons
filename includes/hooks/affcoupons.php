@@ -14,7 +14,7 @@
 function verify_affiliate_coupon($vars) {
 	if (isset($vars['promo'])) {
 		$promocode = $vars['promo'];
-		$data = select_query('tblpromotions',  'id', array("code"=>"$promocode"));
+		$data = select_query('tblpromotions', 'id', array("code"=>"$promocode"));
 		if (mysql_num_rows($data)) {
 			$row = mysql_fetch_array($data);
 			$couponid = $row[0];
