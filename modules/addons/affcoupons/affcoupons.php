@@ -28,7 +28,7 @@ function affcoupons_config() {
  * @return array Status array for notice (success, error, info)
  */
 function affcoupons_activate() {
-	return AffiliateCoupons::get_instance()->activate();
+	return AffiliateCoupons::activate();
 }
 
 /**
@@ -36,7 +36,7 @@ function affcoupons_activate() {
  * @return array Status array for notice (success, error, info)
  */
 function affcoupons_deactivate() {
-	return AffiliateCoupons::get_instance()->deactivate();
+	return AffiliateCoupons::deactivate();
 }
 
 /**
@@ -44,7 +44,8 @@ function affcoupons_deactivate() {
  * @param  array $vars WHMCS vars
  */
 function affcoupons_upgrade($vars) {
-	AffiliateCoupons::get_instance()->upgrade($vars);
+	// nothing returned or output on upgrade
+	AffiliateCoupons::upgrade($vars);
 }
 
 /**
@@ -52,7 +53,8 @@ function affcoupons_upgrade($vars) {
  * @param  array $vars WHMCS vars
  */
 function affcoupons_output($vars){
-	AffiliateCoupons::get_instance()->admin();
+	// Only admin area uses echo to output, all others must return data or html
+	AffiliateCoupons::OutputAdmin($vars);
 }
 
 /**
@@ -61,7 +63,7 @@ function affcoupons_output($vars){
  * @return string       HTML to output
  */
 function affcoupons_sidebar($vars) {
-	AffiliateCoupons::get_instance()->sidebar();
+	return AffiliateCoupons::OutputSidebar($vars);
 }
 
 /**
@@ -70,7 +72,7 @@ function affcoupons_sidebar($vars) {
  * @return array       pagetitle, breadcrumb(array), templatefile, requirelogin (boolean), vars (array)
  */
 function affcoupons_clientarea($vars) {
-	AffiliateCoupons::get_instance()->client();
+	return AffiliateCoupons::OutputClient($vars);
 }
 
 ?>

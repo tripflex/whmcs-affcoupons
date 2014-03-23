@@ -10,7 +10,7 @@
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
- * @Last Modified time: 2014-03-22 21:20:11
+ * @Last Modified time: 2014-03-23 16:15:43
  */
 
 if (!defined("WHMCS"))
@@ -37,22 +37,22 @@ class AffiliateCoupons_AdminArea extends AffiliateCoupons {
 	}
 
 	public function output($vars){
-		    $modulelink = $vars['modulelink'];
-		    $version = $vars['version'];
-		    $option1 = $vars['option1'];
-		    $option2 = $vars['option2'];
-		    $option3 = $vars['option3'];
-		    $option4 = $vars['option4'];
-		    $option5 = $vars['option5'];
-		    $LANG = $vars['_lang'];
+		if($_GET['page'] === 'test'):
+			include_once( dirname( __FILE__ ) . "/pages/test.php" );
+		else:
+			require_once( dirname( __FILE__ ) . "/pages/config.php" );
 
-		    echo '<p>asdf'.$LANG['intro'].'</p>
-			<p>'.$LANG['description'].'</p>
-			<p>'.$LANG['documentation'].'</p>';
+		endif;
 	}
 
-	public function footer(){
-		return '<b>Heya!</b>';
+	public function footer($vars){
+		return '';
+	}
+	public function head($vars){
+		return '';
+	}
+	public function header($vars){
+		return '';
 	}
 
 }
