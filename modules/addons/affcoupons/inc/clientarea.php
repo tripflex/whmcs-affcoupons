@@ -54,6 +54,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
             $return_html = "<script>window.location.replace('" . self::$landing . "');</script>";
         } else {
             $return_html = '<script src="' . WHMCSe::get_module_url('affcoupons') . '/inc/js/affiliates.js"></script>';
+            $return_html .= '<input type="hidden" id="index_page" value="' . parent::$index_page . '">';
         }
 		return $return_html;
 	}
@@ -67,7 +68,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	public function output($vars){
 		return array(
 	        'pagetitle' => 'Affiliate Promo Codes',
-	        'breadcrumb' => array('index.php?m=affcoupons'=>'Affiliate Promo Code'),
+	        'breadcrumb' => array(parent::$index_page . '?m=affcoupons'=>'Affiliate Promo Code'),
 	        'templatefile' => 'clientaffcoupons',
 	        'requirelogin' => true, # or false
 	        'vars' => array(
@@ -77,7 +78,8 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	            'coupon' => self::$coupon,
 	            'avail_coupon' => self::$avail_coupon,
 	            'notice'=> self::$notice,
-	            'notice_type' => self::$notice_type
+	            'notice_type' => self::$notice_type,
+                'index_page' => parent::$index_page
         			),
 			);
 	}

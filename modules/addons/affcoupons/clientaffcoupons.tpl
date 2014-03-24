@@ -8,7 +8,7 @@
     <div class="affnotice">
         <div id="notice" class="alert alert-{if !$notice_type}success{else}{$notice_type}{/if}" {if !$notice}style="display: none;"{/if}>{$notice}</div>
     </div>
-    <form method="POST" action="index.php?m=affcoupons" name="landingpage" id="landingpageForm">
+    <form method="POST" action="{$index_page}?m=affcoupons" name="landingpage" id="landingpageForm">
         <input type="hidden" name="cmd" value="modlanding">
         <div class="well textcenter">
             <input type="text" name="landing" id="landing" value="{$landing}" class="bigfield">
@@ -41,7 +41,7 @@
 				{foreach from=$coupon key=k item=v}
 					<tr>
 						<td>
-							<a href="index.php?m=affcoupons&cmd=del&cid={$v.id}"><img src="modules/addons/affcoupons/inc/images/delete.png" alt="Delete"></a>
+							<a href="{$index_page}?m=affcoupons&cmd=del&cid={$v.id}"><img src="modules/addons/affcoupons/inc/images/delete.png" alt="Delete"></a>
 						</td>
 						<td>
 							{$v.code}
@@ -66,7 +66,7 @@
 	        <h2>Add Coupons</h2>
 	    </div>
 	</div>
-	<form action="index.php?m=affcoupons" method="POST" name="addcoupons" class="form-horizontal">
+	<form action="{$index_page}?m=affcoupons" method="POST" name="addcoupons" class="form-horizontal">
 	    <input type="hidden" name="cmd" value="add">
 	    <div class="well">
 	        <div class="control-group">

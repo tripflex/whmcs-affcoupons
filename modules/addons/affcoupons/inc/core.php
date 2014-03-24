@@ -30,6 +30,7 @@ class AffiliateCoupons {
 	public static $version = '2.1.0';
 	public static $author = "<a href=\"http://smyl.es\" target=\"_blank\">Myles McNamara</a>";
 	public static $language = "english";
+    public static $index_page = "index.php";
 	public $debug = true;
 
 	public function __construct() {
