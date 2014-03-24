@@ -36,6 +36,8 @@ Copy/Move the `modules` directory and the `aff.php` file to the root of your WHM
 Login to your WHMCS installation, go to the Addon Modules page, and activate the new module.
 
 ## A Few Things To Know
+Make sure to check the admin page for Affiliate Coupons to see if updates are available, there will be a notification at top of page when a new version is available.
+
 With this release almost everything has been redone code wise, including sanitizing and validating user data which was not done previously.
 
 The affiliates page is now loaded using jQuery on the affiliates page, with the next release everything will be done through ajax on affiliates page.

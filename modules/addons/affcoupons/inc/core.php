@@ -6,7 +6,7 @@
  * @author     Myles McNamara (get@smyl.es)
  * @copyright  Copyright (c) Myles McNamara 2013-2014
  * @license    GPL v3+
- * @version    2.1
+ * @version    2.1a
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
@@ -26,7 +26,7 @@ require_once( AC_ROOT . "/whmcse.php" );
 class AffiliateCoupons {
 	protected static $instance = null;
 	public static $name = "Affiliate Coupons";
-	public static $description = "Allow affiliates to create custom promo codes from promotions spefied by Admin which are tied to their affiliate ID.";
+	public static $description = "Allow affiliates to create custom promo codes from promotions specified by Admin which are tied to their affiliate ID.";
 	public static $version = '2.1.0';
 	public static $author = "<a href=\"http://smyl.es\" target=\"_blank\">Myles McNamara</a>";
 	public static $language = "english";
@@ -112,10 +112,10 @@ class AffiliateCoupons {
 
 	public function deactivate(){
 	    // $query = "DROP TABLE `mod_affcoupons`";
-	    $result = full_query($query);
+//	    $result = full_query($query);
 
 	    # Return Result
-	    return array('status'=>'success','description'=>'Affiliate Coupons deactivated successfully.');
+	    return array('status'=>'success','description'=>'Affiliate Coupons deactivated successfully.  Database values were NOT removed.');
 	    // return array('status'=>'error','description'=>'If an error occurs you can return an error message for display here');
 	    // return array('status'=>'info','description'=>'If you want to give an info message to a user you can return it here');
 	}

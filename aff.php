@@ -7,7 +7,7 @@
  * @author     WHMCS WHMCS Limited (development@whmcs.com)
  * @copyright  Copyright (c) Myles McNamara 2013-2014
  * @license    GNU GPL v3+
- * @version    2.1
+ * @version    2.1a
  * @link       https://gh.smyl.es/whmcs-affcoupons
  * 
  */

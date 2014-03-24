@@ -6,7 +6,7 @@
  * @author     Myles McNamara (get@smyl.es)
  * @copyright  Copyright (c) Myles McNamara 2013-2014
  * @license    GPL v3+
- * @version    2.1
+ * @version    2.1a
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
@@ -37,6 +37,9 @@ class AffiliateCoupons_AdminArea extends AffiliateCoupons {
 	}
 
 	public function output($vars){
+        if(self::check_for_update()){
+            echo '<div class="infobox"><strong>New Version Available!</strong><br>There is a new version available, you should upgrade ASAP!<br><a href="https://github.com/tripflex/whmcs-affcoupons" target="_blank">Go here for latest release</a></div>';
+        }
 		if($_GET['page'] === 'test'):
 			include_once( dirname( __FILE__ ) . "/pages/test.php" );
 		else:
@@ -44,6 +47,16 @@ class AffiliateCoupons_AdminArea extends AffiliateCoupons {
 
 		endif;
 	}
+
+    public function check_for_update(){
+        $url = 'https://github.com/tripflex/whmcs-affcoupons/raw/master/release';
+        $release = file_get_contents($url, "r");
+        if (intval($release) > intval(parent::$version)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 	public function footer($vars){
 		return '';

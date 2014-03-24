@@ -6,7 +6,7 @@
  * @author     Myles McNamara (get@smyl.es)
  * @copyright  Copyright (c) Myles McNamara 2013-2014
  * @license    GPL v3+
- * @version    2.1
+ * @version    2.1a
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
@@ -76,7 +76,7 @@ print "<style type=\"text/css\">
 			color: #EA5200;
 		}
 		</style>
-
+        <script src=\"https://ajax.aspnetcdn.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js\" type=\"text/javascript\"></script>
 		<script type=\"text/javascript\">
 		$().ready(function() {
 			$(\"#AddForm\").validate({
@@ -222,4 +222,4 @@ while ($r = mysql_fetch_array($data)) {
 			<td>$existingclient</td></tr>";
 	
 }
-print "</table><br />";
+print "</table><br /></div>";
