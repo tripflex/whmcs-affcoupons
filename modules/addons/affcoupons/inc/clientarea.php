@@ -10,7 +10,7 @@
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
- * @Last Modified time: 2014-03-23 22:36:38
+ * @Last Modified time: 2014-03-24 12:12:19
  */
 
 if (!defined("WHMCS"))
@@ -27,6 +27,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	protected static $coupon;
 	protected static $avail_coupon;
 	protected static $notice;
+    protected static $notice_type;
 
 	public static function get_instance() {
 
@@ -64,7 +65,8 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	            'landing' => self::$landing,
 	            'coupon' => self::$coupon,
 	            'avail_coupon' => self::$avail_coupon,
-	            'notice'=> self::$notice
+	            'notice'=> self::$notice,
+	            'notice_type' => self::$notice_type
         			),
 			);
 	}
@@ -126,14 +128,21 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	 * @param string $landing sanitized and validated URL
 	 */
 	protected function set_landing($landing){
-//        Lets sanitize and validate just to be sure
-		self::$landing = WHMCSe::prep_url($landing);
-		// Attempt to insert new landing entry in db, if existing entry update existing
-		$query = mysql_query('INSERT INTO tblaffcouponslanding (aff_id, landing)
-								VALUES (\'self::$aff_id\', \'$landing\')
-								ON DUPLICATE KEY
-									UPDATE landing=\'$landing\'
-				');
+        //  TODO: add another check to validate and sanitize
+		self::$landing = $landing;
+//		// Attempt to insert new landing entry in db, if existing entry update existing
+//		$query = mysql_query('INSERT INTO tblaffcouponslanding (aff_id, landing)
+//								VALUES ('. self::$aff_id .', ' . $landing .')
+//								ON DUPLICATE KEY
+//									UPDATE landing=\'$landing\'
+//				');
+        $data = select_query('tblaffcouponslanding', 'landing', array('aff_id'=>self::$aff_id));
+        $r = mysql_fetch_array($data);
+        if(!$r['landing']){
+            insert_query("tblaffcouponslanding", array("aff_id"=>self::$aff_id, "landing"=>$landing));
+        } else {
+            update_query("tblaffcouponslanding", array("landing"=>$landing), array("aff_id"=>self::$aff_id));
+        }
 	}
 
     protected function get_landing_from_db(){
@@ -150,15 +159,16 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	protected function get_landing(){
 		// Check if landing URL was sent in POST first, meaning the update button was pressed
 		if (isset($_POST['landing'])){
-            $landing_clean = WHMCSe::prep_input('landing', 'url', 'POST', false);
-            if($landing_clean){
-                $landing = $landing_clean;
-//                self::set_landing($landing_clean);
-                self::$notice = "Landing page was updated" .$landing_clean;
+            $landing_sanitized = filter_input(INPUT_POST, 'landing', FILTER_SANITIZE_URL);
+            $landing_validated = filter_var($landing_sanitized, FILTER_VALIDATE_URL);
+            if($landing_validated){
+                $landing = $landing_validated;
+                self::set_landing($landing);
+                self::set_notice("Landing page was updated");
             } else {
 //                Invalid URL used, lets get the entry saved in the db
                 $landing = self::get_landing_from_db();
-                self::$notice = "There was an error updating the landing page ";
+                self::set_notice("There was an error updating the landing page", "danger");
             }
 		} else {
 			// landing wasn't in POST, let's attempt to get it from the db
@@ -169,11 +179,18 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	}
 
 	protected function get_existing_coupons(){
+        if(isset($_POST['cmd']) && $_POST['cmd'] === 'add')
+            self::add_new_coupon();
+
+        if(isset($_GET['cmd']) && $_GET['cmd'] === 'del')
+            self::remove_coupon();
+
+        $aff_id = self::$aff_id;
 		// Get Existing Coupons
 		$coupon = array();
-		$sql = 'SELECT p.code, p.type, p.value, p.uses, p.id
+		$sql = "SELECT p.code, p.type, p.value, p.uses, p.id
 				FROM tblpromotions p, tblaffcoupons a
-				WHERE a.aff_id = \'self::$aff_id\' AND a.coupon = p.id';
+				WHERE a.aff_id = '$aff_id' AND a.coupon = p.id";
 		$data = mysql_query($sql);
 		while ($r = mysql_fetch_array($data)) {
 			$coupon[$r[4]]['code'] = $r[0];
@@ -185,6 +202,56 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 
 		return $coupon;
 	}
+
+    protected function add_new_coupon(){
+//        TODO: sanitize and validate selected coupon
+        $enc_type = $_POST['type'];
+        $code = filter_input(INPUT_POST, 'code', FILTER_SANITIZE_STRING);
+        if($code) {
+            $dec_type = base64_decode($enc_type);
+            list($atype, $arecurring, $avalue, $acycles, $aappliesto, $aexpirationdate, $amaxuses, $aapplyonce, $anewsignups, $aexistingclient) = explode("@", $dec_type);
+            $data = select_query('tblpromotions', 'id', array('code' => $code));
+            if (!mysql_num_rows($data)) {
+                insert_query("tblpromotions",
+                    array("code" => $code, "type" => $atype, "recurring" => $arecurring,
+                        "value" => $avalue, "cycles" => $acycles, "appliesto" => $aappliesto,
+                        "expirationdate" => $aexpirationdate, "maxuses" => $amaxuses, "applyonce" => $aapplyonce,
+                        "newsignups" => $anewsignups, "existingclient" => $aexistingclient));
+                $data = select_query('tblpromotions', 'id', array("code" => $code));
+                $r = mysql_fetch_array($data);
+                $newcid = $r[0];
+                insert_query("tblaffcoupons", array("coupon" => $newcid, "aff_id" => self::$aff_id));
+                self::set_notice("Coupon $newcid added successfully.");
+            } else {
+                self::set_notice("Coupon already exists.");
+            }
+        } else {
+            self::set_notice('Invalid coupon code', 'danger');
+        }
+    }
+
+    protected function remove_coupon(){
+        $coupon_id = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT);
+        if($coupon_id) {
+            $data = select_query('tblaffcoupons', 'aff_id', array('coupon' => $coupon_id, 'aff_id' => self::$aff_id));
+            if (mysql_num_rows($data)) {
+                delete_query("tblaffcoupons", "coupon='$coupon_id'");
+                delete_query("tblpromotions", "id='$coupon_id'");
+                self::set_notice("Coupon $coupon_id has been deleted.");
+            } else {
+                self::set_notice("You do not own Coupon $coupon_id", 'danger');
+            }
+        } else {
+            self::set_notice("Error removing coupon", 'danger');
+        }
+    }
+
+    protected function set_notice($message, $type = null){
+        self::$notice = $message;
+        if($type){
+            self::$notice_type = $type;
+        }
+    }
 }
 
 ?>

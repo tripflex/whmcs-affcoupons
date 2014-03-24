@@ -3,7 +3,7 @@
 
 
 {/php}
-{$notice}
+
 <div id="affcoupons-ajax">
 
     <div class="page-header">
@@ -11,9 +11,7 @@
             <h2>Landing Page</h2>
         </div>
     </div>
-    <div class="styled_title">
-        <h3>{php}echo $msg;{/php}</h3>
-    </div>
+    <div class="alert alert-{if !$notice_type}success{else}{$notice_type}{/if}" {if !$notice}style="display: none;"{/if}>{$notice}</div>
     <form method="POST" name="landingpage">
         <input type="hidden" name="cmd" value="modlanding">
         <div class="well textcenter">
@@ -29,7 +27,6 @@
 	        <h2>Your Coupons</h2>
 	    </div>
 	</div>
-	<div class="alert alert-success" {if !$msg}style="display: none;"{/if}></div>
 	<table class="table table-striped table-framed">
 	    <thead>
 	        <tr>
@@ -48,7 +45,7 @@
 				{foreach from=$coupon key=k item=v}
 					<tr>
 						<td>
-							<a href="affiliates.php?cmd=del&cid={$v.id}"><img src="templates/default/images/delete.png" alt="Delete"></a>
+							<a href="index.php?m=affcoupons&cmd=del&cid={$v.id}"><img src="modules/addons/affcoupons/inc/images/delete.png" alt="Delete"></a>
 						</td>
 						<td>
 							{$v.code}

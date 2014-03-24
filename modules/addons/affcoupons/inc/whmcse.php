@@ -100,6 +100,7 @@ class WHMCSe {
     	return self::get_url() . '/modules/addons/' . $module;
     }
 
+//    Functions below still need to be tested, currently NON functional
     public static function prep_url($url = null, $validate = true, $input_type = null, $input_var = null){
 
         if($input_type && $input_var){
@@ -119,6 +120,8 @@ class WHMCSe {
             }
         }
     }
+
+
     public static function prep_input($input_var, $filter_type = 'STRING', $input_type = 'POST', $validate = TRUE){
         $input = "INPUT_" . strtoupper($input_type);
         $type = 'FILTER_SANITIZE_' . strtoupper($filter_type);
