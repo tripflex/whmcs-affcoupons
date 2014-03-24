@@ -37,6 +37,8 @@ class AffiliateCoupons_AdminArea extends AffiliateCoupons {
 	}
 
 	public function output($vars){
+//        required for config.php file
+        $modulelink = $vars['modulelink'];
         if(self::check_for_update()){
             echo '<div class="infobox"><strong>New Version Available!</strong><br>There is a new version available, you should upgrade ASAP!<br><a href="https://github.com/tripflex/whmcs-affcoupons" target="_blank">Go here for latest release</a></div>';
         }
