@@ -10,7 +10,7 @@
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
- * @Last Modified time: 2014-03-23 15:40:01
+ * @Last Modified time: 2014-03-23 22:36:38
  */
 
 if (!defined("WHMCS"))
@@ -26,6 +26,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	protected static $landing;
 	protected static $coupon;
 	protected static $avail_coupon;
+	protected static $notice;
 
 	public static function get_instance() {
 
@@ -62,11 +63,16 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	            'clientid' => self::$clientid,
 	            'landing' => self::$landing,
 	            'coupon' => self::$coupon,
-	            'avail_coupon' => self::$avail_coupon
+	            'avail_coupon' => self::$avail_coupon,
+	            'notice'=> self::$notice
         			),
 			);
 	}
 
+	/**
+	 * Get admin created promos that clients can use
+	 * @return array Returns an array with the base64 encoded string values and label
+	 */
 	protected function get_avail_coupon(){
 		$avail_coupon = array();
 		$data = select_query("tblaffcouponsconf", "*", array());
@@ -91,12 +97,20 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		return $avail_coupon;
 	}
 
+	/**
+	 * Get affiliate ID based off logged in client id from db
+	 * @return integer affiliate id
+	 */
 	protected function get_aff_id(){
 		$data = select_query('tblaffiliates', 'id', array('clientid'=>self::$clientid));
 		$r = mysql_fetch_array($data);
 		return $r[0];
 	}
 
+	/**
+	 * Get logged in client id from session
+	 * @return integer current logged in user session uid
+	 */
 	protected function get_clientid(){
 		global $CONFIG;
 
@@ -107,29 +121,59 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		}
 	}
 
+	/**
+	 * Set landing URL in db, or create new entry if does not exist
+	 * @param string $landing sanitized and validated URL
+	 */
+	protected function set_landing($landing){
+//        Lets sanitize and validate just to be sure
+		self::$landing = WHMCSe::prep_url($landing);
+		// Attempt to insert new landing entry in db, if existing entry update existing
+		$query = mysql_query('INSERT INTO tblaffcouponslanding (aff_id, landing)
+								VALUES (\'self::$aff_id\', \'$landing\')
+								ON DUPLICATE KEY
+									UPDATE landing=\'$landing\'
+				');
+	}
+
+    protected function get_landing_from_db(){
+        $data = select_query('tblaffcouponslanding', 'landing', array('aff_id'=>self::$aff_id));
+        $r = mysql_fetch_array($data);
+        if (!$r['landing']) {
+            $landing = WHMCSe::get_url();
+        } else {
+            $landing = $r['landing'];
+        }
+        return $landing;
+    }
+
 	protected function get_landing(){
-		// Get Landing Page
-		$data = select_query('tblaffcouponslanding', 'landing', array('aff_id'=>self::$aff_id));
-		$r = mysql_fetch_array($data);
-		if (!$r['landing']) {
-			$landing = WHMCSe::get_url();
-			$nolanding = 1;
+		// Check if landing URL was sent in POST first, meaning the update button was pressed
+		if (isset($_POST['landing'])){
+            $landing_clean = WHMCSe::prep_input('landing', 'url', 'POST', false);
+            if($landing_clean){
+                $landing = $landing_clean;
+//                self::set_landing($landing_clean);
+                self::$notice = "Landing page was updated" .$landing_clean;
+            } else {
+//                Invalid URL used, lets get the entry saved in the db
+                $landing = self::get_landing_from_db();
+                self::$notice = "There was an error updating the landing page ";
+            }
 		} else {
-			$landing = $r['landing'];
-			$nolanding = 0;
+			// landing wasn't in POST, let's attempt to get it from the db
+            $landing = self::get_landing_from_db();
 		}
-		if (isset($_POST['landing'])) {
-			$landing = $_POST['landing'];
-		}
+
 		return $landing;
 	}
 
 	protected function get_existing_coupons(){
 		// Get Existing Coupons
 		$coupon = array();
-		$sql = "SELECT p.code, p.type, p.value, p.uses, p.id
+		$sql = 'SELECT p.code, p.type, p.value, p.uses, p.id
 				FROM tblpromotions p, tblaffcoupons a
-				WHERE a.aff_id = 'self::$aff_id' AND a.coupon = p.id";
+				WHERE a.aff_id = \'self::$aff_id\' AND a.coupon = p.id';
 		$data = mysql_query($sql);
 		while ($r = mysql_fetch_array($data)) {
 			$coupon[$r[4]]['code'] = $r[0];

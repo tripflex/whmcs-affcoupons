@@ -91,9 +91,49 @@ class WHMCSe {
         return self::get_url($SSL) . "/" . self::get_custom_admin_path();
     }
 
+    /**
+     * Get addon module URL
+     * @param  string $module Module name, should be exactly as named in addon module folder
+     * @return string         Full URL path to addon module
+     */
     public static function get_module_url($module) {
     	return self::get_url() . '/modules/addons/' . $module;
     }
 
+    public static function prep_url($url = null, $validate = true, $input_type = null, $input_var = null){
+
+        if($input_type && $input_var){
+            $input = "INPUT_" . ucwords($input_type);
+            $prepped_url = filter_input($input, $input_var, FILTER_SANITIZE_URL);
+        } else {
+            $prepped_url = filter_var($url, FILTER_SANITIZE_URL);
+        }
+
+        if(!$validate){
+            return $prepped_url;
+        } else {
+            if(filter_var($prepped_url, FILTER_VALIDATE_URL)){
+                return $prepped_url;
+            } else {
+                return false;
+            }
+        }
+    }
+    public static function prep_input($input_var, $filter_type = 'STRING', $input_type = 'POST', $validate = TRUE){
+        $input = "INPUT_" . strtoupper($input_type);
+        $type = 'FILTER_SANITIZE_' . strtoupper($filter_type);
+        $prepped_input = filter_input($input, $input_var, FILTER_SANITIZE_URL);
+
+        if(!$validate){
+            return $prepped_input;
+        } else {
+            $type = 'FILTER_VALIDATE_' . strtoupper($filter_type);
+            if(filter_var($prepped_input, $type)){
+                return $prepped_input;
+            } else {
+                return false;
+            }
+        }
+    }
 }
 ?>

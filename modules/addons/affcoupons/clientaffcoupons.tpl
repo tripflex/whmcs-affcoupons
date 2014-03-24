@@ -1,3 +1,9 @@
+{php}
+
+
+
+{/php}
+{$notice}
 <div id="affcoupons-ajax">
 
     <div class="page-header">
@@ -6,9 +12,9 @@
         </div>
     </div>
     <div class="styled_title">
-        <h3>{$msg2}</h3>
+        <h3>{php}echo $msg;{/php}</h3>
     </div>
-    <form action="affiliates.php" method="POST" name="landingpage">
+    <form method="POST" name="landingpage">
         <input type="hidden" name="cmd" value="modlanding">
         <div class="well textcenter">
             <input type="text" name="landing" id="landing" value="{$landing}" class="bigfield">
@@ -67,7 +73,7 @@
 	        <h2>Add Coupons</h2>
 	    </div>
 	</div>
-	<form action="affiliates.php" method="POST" name="addcoupons" class="form-horizontal">
+	<form action="" method="POST" name="addcoupons" class="form-horizontal">
 	    <input type="hidden" name="cmd" value="add">
 	    <div class="well">
 	        <div class="control-group">
