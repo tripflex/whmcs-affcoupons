@@ -1,9 +1,3 @@
-{php}
-
-
-
-{/php}
-
 <div id="affcoupons-ajax">
 
     <div class="page-header">
@@ -11,14 +5,16 @@
             <h2>Landing Page</h2>
         </div>
     </div>
-    <div class="alert alert-{if !$notice_type}success{else}{$notice_type}{/if}" {if !$notice}style="display: none;"{/if}>{$notice}</div>
-    <form method="POST" name="landingpage">
+    <div class="affnotice">
+        <div id="notice" class="alert alert-{if !$notice_type}success{else}{$notice_type}{/if}" {if !$notice}style="display: none;"{/if}>{$notice}</div>
+    </div>
+    <form method="POST" action="index.php?m=affcoupons" name="landingpage" id="landingpageForm">
         <input type="hidden" name="cmd" value="modlanding">
         <div class="well textcenter">
             <input type="text" name="landing" id="landing" value="{$landing}" class="bigfield">
             <div class="internalpaadding">
                 <p>This option will control where your referrals will be redirected after visiting your referral link.</p>
-                <input type="submit" name="Submit" value="Update" class="btn btn-primary btn-large">
+                <input type="submit" name="Submit" value="Update" class="btn btn-primary btn-large" id="updatelanding">
             </div>
         </div>
     </form>
@@ -70,7 +66,7 @@
 	        <h2>Add Coupons</h2>
 	    </div>
 	</div>
-	<form action="" method="POST" name="addcoupons" class="form-horizontal">
+	<form action="index.php?m=affcoupons" method="POST" name="addcoupons" class="form-horizontal">
 	    <input type="hidden" name="cmd" value="add">
 	    <div class="well">
 	        <div class="control-group">

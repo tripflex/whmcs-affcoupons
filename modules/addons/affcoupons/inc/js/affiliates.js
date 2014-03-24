@@ -15,7 +15,23 @@ $(document).ready(function() {
     var checkAff = $(".page-header .styled_title h1:contains('Affiliates')")[0];
 
     if (checkAff) {
-        $('#whmcscontainer .contentpadded').append($('<div>').load('modules/addons/affcoupons/inc/clientarea.php'));
+        $('<div>').load('index.php?m=affcoupons #affcoupons-ajax').insertAfter('.whmcscontainer .contentpadded .pagination');
+//        $('#landingpageForm').submit(function( event ){
+//            // Stop form from submitting normally
+//            event.preventDefault();
+//
+//            // Get some values from elements on the page:
+//            var $form = $( this ),
+//                landing_input = $form.find( "input[name='landing']" ).val();
+//
+//            // Send the data using post
+//            var posting = $.post( 'index.php?m=affcoupons', { landing: landing_input } );
+//
+//            // Put the results in a div
+//            posting.done(function( data ) {
+//                var content = $( data ).find( '#affnotice' );
+//                $( '#affnotice' ).html( content );
+//            });
+//        });
     }
-
 });
