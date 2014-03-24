@@ -49,9 +49,20 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	}
 
 	public function head($vars){
-
-		return '<script src="' . WHMCSe::get_module_url('affcoupons') . '/inc/js/affiliates.js"></script>';
+        $redirect = self::check_redirect();
+        if($redirect) {
+            $return_html = "<script>window.location.replace('" . self::$landing . "');</script>";
+        } else {
+            $return_html = '<script src="' . WHMCSe::get_module_url('affcoupons') . '/inc/js/affiliates.js"></script>';
+        }
+		return $return_html;
 	}
+
+
+    protected function check_redirect(){
+//        Coming soon, should no longer require replacing aff.php file
+        return false;
+    }
 
 	public function output($vars){
 		return array(
