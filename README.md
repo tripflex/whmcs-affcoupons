@@ -1,6 +1,9 @@
 ## WHMCS 5.2+ Affiliate Coupons 2.0
 Author: Myles McNamara (get@smyl.es)
 
+## WARNING
+I do not recommend using this version anymore, there were a few issues I found with security and is the reason the entire plugin was rewritten, please use the master branch or a newer version.  If you must, use this version at your OWN risk, but don't say I didn't warn you.
+
 Based off of Affiliate Coupons 1.2 by Frank Laszlo (frank@asmallorange.com)
 
 ### Screenshots
