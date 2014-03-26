@@ -1,16 +1,11 @@
-<<<<<<< HEAD
 # WHMCS Affiliate Coupons v2.1 Alpha
-=======
-## Version 2.1 Alpha Now Available!
-Version 2.1 Alpha is now available, you can find it at the link below as well as instructions on installation.  I recommend using this version over 2.0 from now on.
 
-https://github.com/tripflex/whmcs-affcoupons/tree/2.1alpha
+Version 2.1 Alpha is now available, this is a complete rewrite of the code base.
 
 MAKE SURE TO FOLLOW INSTRUCTIONS IF YOU ALREADY HAVE INSTALLED AN OLDER VERSION
 
-## WHMCS 5.2+ Affiliate Coupons 2.0
+## WHMCS 5.2+ Affiliate Coupons 2.1
 Author: Myles McNamara (get@smyl.es)
->>>>>>> master
 
 ## Prerequisites (required!)
 Before installing this version you need to remove all the original files from WHMCS Affiliate Coupons <= v2.0, this will not remove any database entries, and the new 2.1 alpha version will work with all existing database entries.
@@ -29,7 +24,7 @@ The files you need to modify or completely remove include:
 <!-- BEGIN AFFILIATE COUPONS CODE -->
 {php}
 include('affcoupons.php');
-{/php}
+{/php}<
 <!-- END AFFILIATE COUPONS CODE -->
 ```
 
@@ -39,9 +34,9 @@ If you do not remove the code above from that template you will get an error bec
 Now that you've removed all the files above we can start the installation of the new version.
 
 Download the ZIP file from this link:
-https://github.com/tripflex/whmcs-affcoupons/archive/2.1alpha.zip
+https://github.com/tripflex/whmcs-affcoupons/archive/master.zip
 
-Open the archive, and inside the `whmcs-affcoupons-2.1alpha` folder should be the `modules` directory and `aff.php` file.
+Open the archive, and inside the `whmcs-affcoupons-master` folder should be the `modules` directory and `aff.php` file.
 
 Copy/Move the `modules` directory and the `aff.php` file to the root of your WHMCS installation.
 
