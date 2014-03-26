@@ -1,5 +1,8 @@
 ## THIS VERSION WILL NOT WORK ON WHMCS 5.2+, USE MASTER OR WHMCS-5.2 BRANCH.
 
+## WARNING
+I do not recommend using this version anymore, there were a few issues I found with security and is the reason the entire plugin was rewritten, please use the master branch or a newer version.  If you must, use this version at your OWN risk, but don't say I didn't warn you.  If you're still using WHMCS 5.1 you have more security issues than this addon to worry about.
+
 WHMCS 5.1 uses a different tag for the cookie that is saved, and a few other differences that make this version incompatible with WHMCS 5.2+
 
 Chances are this version will never get updated so you might as well upgrade to WHMCS 5.2+ and use the latest version!
