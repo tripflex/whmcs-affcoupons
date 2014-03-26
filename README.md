@@ -7,6 +7,16 @@ MAKE SURE TO FOLLOW INSTRUCTIONS IF YOU ALREADY HAVE INSTALLED AN OLDER VERSION
 ## WHMCS 5.2+ Affiliate Coupons 2.1
 Author: Myles McNamara (get@smyl.es)
 
+### Screenshots
+<table>
+	<td width="50%">
+		<img src="https://smyl.es/img/Selection-1130x736-12.png" alt="Admin Area View">
+	</td>
+	<td width="50%">
+		<img src="https://smyl.es/img/Selection-1002x631-11.png" alt="Client Area Affiliates View">
+	</td>
+</table>
+
 ## Prerequisites (required!)
 Before installing this version you need to remove all the original files from WHMCS Affiliate Coupons <= v2.0, this will not remove any database entries, and the new 2.1 alpha version will work with all existing database entries.
 
