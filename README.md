@@ -1,11 +1,17 @@
-# WHMCS Affiliate Coupons v2.1 Alpha
-
-Version 2.1 Alpha is now available, this is a complete rewrite of the code base.
-
-MAKE SURE TO FOLLOW INSTRUCTIONS IF YOU ALREADY HAVE INSTALLED AN OLDER VERSION
-
-## WHMCS 5.2+ Affiliate Coupons 2.1
+# WHMCS Affiliate Coupons v2.1
 Author: Myles McNamara (get@smyl.es)
+
+Version 2.1 is a complete rewrite of the code base.
+
+**MAKE SURE TO FOLLOW INSTRUCTIONS IF YOU ALREADY HAVE INSTALLED AN OLDER VERSION**
+
+
+## Description
+This module will allow coupon codes to be used instead of affiliate URLs
+for granting referrals to your affiliates. This is handy for affiliates who
+advertise "offline," where it is much easier to give someone a coupon code
+rather than a long URL string for your referral. The coupons will also grant
+the user a discount that can be defined by the administrator.
 
 ### Screenshots
 <table>
@@ -17,8 +23,8 @@ Author: Myles McNamara (get@smyl.es)
 	</td>
 </table>
 
-## Prerequisites (required!)
-Before installing this version you need to remove all the original files from WHMCS Affiliate Coupons <= v2.0, this will not remove any database entries, and the new 2.1 alpha version will work with all existing database entries.
+## Prerequisites (required if upgrading from older version)
+Before installing this version you need to remove all the original files from WHMCS Affiliate Coupons <= v2.0, this will not remove any database entries, and the new 2.1 version will work with all existing database entries.
 
 The files you need to modify or completely remove include:
 
@@ -66,3 +72,4 @@ If you want to provide direct link to just the affiliate promo code page, it is 
 This release loads that page using jQuery, selects the DIV for content, and then inserts it at the bottom of the Affiliates page.  When adding coupon, updating landing page, etc, from affiliates page it will POST to the `index.php?m=affcoupons` page.
 
 ## PLEASE REPORT ANY BUGS OR ISSUES HERE ON GITHUB!
+
