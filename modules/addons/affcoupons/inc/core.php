@@ -28,7 +28,7 @@ class AffiliateCoupons {
 	protected static $instance = null;
 	public static $name = "Affiliate Coupons";
 	public static $description = "Allow affiliates to create custom promo codes from promotions specified by Admin which are tied to their affiliate ID.";
-	public static $version = '2.1.0';
+	public static $version = '2.1.1';
 	public static $author = "<a href=\"http://smyl.es\" target=\"_blank\">Myles McNamara</a>";
 	public static $language = "english";
     public static $index_page = "index.php";
