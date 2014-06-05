@@ -50,7 +50,7 @@ class AffiliateCoupons_AdminArea extends AffiliateCoupons {
 		endif;
 	}
 
-    public function check_for_update(){
+    public static function check_for_update(){
         $url = 'https://github.com/tripflex/whmcs-affcoupons/raw/master/release';
         $release = file_get_contents($url, "r");
         if (intval($release) > intval(parent::$version)){
