@@ -68,13 +68,10 @@ function affcoupons_client_head($vars){
 }
 
 function affcoupons_hook_check_update() {
-	$notice      = '';
-	$need_update = AffiliateCoupons_AdminArea::check_for_update();
-	if ( $need_update ) {
-		$notice = '<div class="infobox"><strong><span class="title">Affiliate Coupons Update Available!</span></strong><br>You can download the update from <a href="https://github.com/tripflex/whmcs-affcoupons">GitHub</a></div>';
-	}
 
-	return $notice;
+	$output = AC_WHMCSe::output_update( AffiliateCoupons::version_url, AffiliateCoupons::$version, 'Affiliate Coupons' );
+
+	return $output;
 }
 
 add_hook( "AdminHomepage", 1, "affcoupons_hook_check_update" );

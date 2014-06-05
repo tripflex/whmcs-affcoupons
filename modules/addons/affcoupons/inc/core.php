@@ -24,17 +24,18 @@ require_once( AC_ROOT . "/sidebar.php" );
 require_once( AC_ROOT . "/whmcse.php" );
 
 class AffiliateCoupons {
+	const version_url = 'https://github.com/tripflex/whmcs-affcoupons/raw/master/release';
 	protected static $instance = null;
 	public static $name = "Affiliate Coupons";
 	public static $description = "Allow affiliates to create custom promo codes from promotions specified by Admin which are tied to their affiliate ID.";
-	public static $version = '2.1.1';
+	public static $version = '2.1.0';
 	public static $author = "<a href=\"http://smyl.es\" target=\"_blank\">Myles McNamara</a>";
 	public static $language = "english";
     public static $index_page = "index.php";
 	public $debug = true;
 
 	public function __construct() {
-		WHMCSe::get_instance();
+		AC_WHMCSe::get_instance();
 	}
 
 	public static function get_instance() {

@@ -53,7 +53,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
         if($redirect) {
             $return_html = "<script>window.location.replace('" . self::$landing . "');</script>";
         } else {
-            $return_html = '<script src="' . WHMCSe::get_module_url('affcoupons') . '/inc/js/affiliates.js"></script>';
+            $return_html = '<script src="' . AC_WHMCSe::get_module_url('affcoupons') . '/inc/js/affiliates.js"></script>';
             $return_html .= '<input type="hidden" id="index_page" value="' . parent::$index_page . '">';
         }
 		return $return_html;
@@ -163,7 +163,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
         $data = select_query('tblaffcouponslanding', 'landing', array('aff_id'=>self::$aff_id));
         $r = mysql_fetch_array($data);
         if (!$r['landing']) {
-            $landing = WHMCSe::get_url();
+            $landing = AC_WHMCSe::get_url();
         } else {
             $landing = $r['landing'];
         }
