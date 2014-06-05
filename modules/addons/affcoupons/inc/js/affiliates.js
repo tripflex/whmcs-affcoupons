@@ -16,7 +16,7 @@ $(document).ready(function() {
     var index_page = $("#index_page").val();
 
     if (checkAff) {
-        $('<div>').load( index_page + '?m=affcoupons #affcoupons-ajax').insertAfter('.whmcscontainer .contentpadded .pagination');
+        $('<div>').load( '/' + index_page + '?m=affcoupons #affcoupons-ajax').insertAfter('.whmcscontainer .contentpadded .pagination');
 //        $('#landingpageForm').submit(function( event ){
 //            // Stop form from submitting normally
 //            event.preventDefault();
