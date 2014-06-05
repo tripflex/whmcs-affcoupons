@@ -66,6 +66,19 @@ function affcoupons_admin_head($vars){
 function affcoupons_client_head($vars){
 	return AffiliateCoupons::ClientArea()->head($vars);
 }
+
+function affcoupons_hook_check_update() {
+	$notice      = '';
+	$need_update = AffiliateCoupons_AdminArea::check_for_update();
+	if ( $need_update ) {
+		$notice = '<div class="infobox"><strong><span class="title">Affiliate Coupons Update Available!</span></strong><br>You can download the update from <a href="https://github.com/tripflex/whmcs-affcoupons">GitHub</a></div>';
+	}
+
+	return $notice;
+}
+
+add_hook( "AdminHomepage", 1, "affcoupons_hook_check_update" );
+
 add_hook("PreCalculateCartTotals",1,"affcoupons_set_affiliate_cookie");
 
 // Runs when loading any admin area page and can be used to define additional HTML output to be output immediately following the <body> tag of the page.
