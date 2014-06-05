@@ -71,6 +71,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	        'breadcrumb' => array(parent::$index_page . '?m=affcoupons'=>'Affiliate Promo Code'),
 	        'templatefile' => 'clientaffcoupons',
 	        'requirelogin' => true, # or false
+	        'forcessl' => true,
 	        'vars' => array(
 	            'aff_id' => self::$aff_id,
 	            'clientid' => self::$clientid,
