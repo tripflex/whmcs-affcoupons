@@ -23,7 +23,7 @@ the user a discount that can be defined by the administrator.
 	</td>
 </table>
 
-## Prerequisites (required if upgrading from older version)
+## Prerequisites (required if upgrade from <= v2.0.0)
 Before installing this version you need to remove all the original files from WHMCS Affiliate Coupons <= v2.0, this will not remove any database entries, and the new 2.1 version will work with all existing database entries.
 
 The files you need to modify or completely remove include:
@@ -75,14 +75,14 @@ This release loads that page using jQuery, selects the DIV for content, and then
 
 ## Changelog
 
-* v2.1.1 *
+**v2.1.1**
 - Updated WHMCSe Framework
 - Added update notice on dashboard
 - Fixed problems with HTTPS
 - Fixed problems with affiliate coupon output on affiliates.php
 
-* v2.1.0 *
+**v2.1.0**
 - Codebase completely rewritten, not compatible with v2.0.0
 
-* v2.0.0 *
+**v2.0.0**
 - Updated version 1 to support new versions of WHMCS
