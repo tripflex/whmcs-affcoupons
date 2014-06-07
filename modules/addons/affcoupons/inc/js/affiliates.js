@@ -8,13 +8,16 @@
  * @version    2.1.1
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
+ * @Last Modified by:   Myles McNamara
+ * @Last Modified time: 2014-06-07 18:41:37
  */
 $(document).ready(function() {
     var checkAffHeader = $(".page-header .styled_title h1:contains('Affiliates')")[0];
     var checkAffPath = $(location).attr('pathname');
     var index_page = $("#index_page").val();
+    var script_name = $("#script_name").val();
 
-    if (checkAffHeader || checkAffPath == '/affiliates.php') {
+    if (checkAffHeader || checkAffPath == '/affiliates.php' || script_name == '/affiliates.php') {
         $('<div>').load( '/' + index_page + '?m=affcoupons #affcoupons-ajax').insertAfter('.whmcscontainer .contentpadded .pagination');
 //        $('#landingpageForm').submit(function( event ){
 //            // Stop form from submitting normally

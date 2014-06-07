@@ -10,7 +10,7 @@
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
- * @Last Modified time: 2014-03-24 12:12:19
+ * @Last Modified time: 2014-06-07 18:41:46
  */
 
 if (!defined("WHMCS"))
@@ -55,6 +55,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
         } else {
             $return_html = '<script src="' . AC_WHMCSe::get_module_url('affcoupons') . '/inc/js/affiliates.js"></script>';
             $return_html .= '<input type="hidden" id="index_page" value="' . parent::$index_page . '">';
+            $return_html .= '<input type="hidden" id="script_name" value="' . $vars['SCRIPT_NAME'] . '">';
         }
 		return $return_html;
 	}
