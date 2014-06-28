@@ -73,6 +73,20 @@ This release loads that page using jQuery, selects the DIV for content, and then
 
 ### PLEASE REPORT ANY BUGS OR ISSUES HERE ON GITHUB!
 
+## Compatibility
+Some themes have been reported to have issues with this addon.  This is **NOT** and I want to repeat, **NOT** an issue with Affiliate Coupons, it is the theme itself.  As long as your theme supports the standard default WHMCS module pages you should not have any problems.  Below you will find fixes for themes that have been found to have issues with supporting standard WHMCS module pages.
+
+### WHMCSThemes.com
+
+Add this code to the top of your `header.tpl` file:
+
+```smarty
+{php}
+    if($_GET['m']) $this->assign('filename', 'modulepage');
+{/php}
+```
+
+
 ## Changelog
 
 **v2.1.1**
