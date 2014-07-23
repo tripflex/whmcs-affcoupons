@@ -6,7 +6,7 @@
  * @author     Myles McNamara (get@smyl.es)
  * @copyright  Copyright (c) Myles McNamara 2013-2014
  * @license    GPL v3+
- * @version    2.1.1
+ * @version    2.1.2
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date       2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara

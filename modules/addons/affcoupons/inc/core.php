@@ -6,7 +6,7 @@
  * @author     Myles McNamara (get@smyl.es)
  * @copyright  Copyright (c) Myles McNamara 2013-2014
  * @license    GPL v3+
- * @version    2.1.1
+ * @version    2.1.2
  * @link       https://github.com/tripflex/whmcs-affcoupons
  * @Date:   2014-03-19 21:42:52
  * @Last Modified by:   Myles McNamara
@@ -28,7 +28,7 @@ class AffiliateCoupons {
 	protected static $instance = null;
 	public static $name = "Affiliate Coupons";
 	public static $description = "Allow affiliates to create custom promo codes from promotions specified by Admin which are tied to their affiliate ID.";
-	public static $version = '2.1.1';
+	public static $version = '2.1.2';
 	public static $author = "<a href=\"http://smyl.es\" target=\"_blank\">Myles McNamara</a>";
 	public static $language = "english";
     public static $index_page = "index.php";
