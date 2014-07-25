@@ -1,5 +1,5 @@
-# WHMCS Affiliate Coupons v2.1.1
-* Current Stable Version: 2.1.1
+# WHMCS Affiliate Coupons v2.1.2
+* Current Stable Version: 2.1.2
 * Author: Myles McNamara (get@smyl.es)
 
 Starting with version >= 2.1.0 is a complete rewrite of the code base.
@@ -88,6 +88,8 @@ Add this code to the top of your `header.tpl` file:
 
 
 ## Changelog
+**v2.1.2**
+- Fix JS issue not detecting affiliates page
 
 **v2.1.1**
 - Updated WHMCSe Framework
