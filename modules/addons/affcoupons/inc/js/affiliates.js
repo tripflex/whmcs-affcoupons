@@ -17,7 +17,7 @@ $(document).ready(function() {
     var index_page = $("#index_page").val();
     var script_name = $("#script_name").val();
 
-    if (checkAffHeader || (checkAffPath.indexOf("affiliates.php") >= 0) || (script_name.indexOf("affiliates.php") >= 0) {
-            $('<div>').load('/' + index_page + '?m=affcoupons #affcoupons-ajax').insertAfter('.whmcscontainer .contentpadded .pagination');
+    if (checkAffHeader || (checkAffPath.indexOf("affiliates.php") >= 0) || (script_name.indexOf("affiliates.php") >= 0)) {
+        $('<div>').load('/' + index_page + '?m=affcoupons #affcoupons-ajax').insertAfter('.whmcscontainer .contentpadded .pagination');
     }
 });
