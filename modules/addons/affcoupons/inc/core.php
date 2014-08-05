@@ -72,7 +72,7 @@ class AffiliateCoupons {
 		return self::ClientArea()->output($vars);
 	}
 
-	public function activate(){
+	public static function activate(){
 	    # Create Custom DB Table
 	    // $query = "CREATE TABLE IF NOT EXISTS `mod_affcoupons` (`id` INT( 1 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,`affcoupons` TEXT NOT NULL )";
 	    $query = array();
@@ -112,7 +112,7 @@ class AffiliateCoupons {
     	// return array('status'=>'info','description'=>'You can use the info status return to display a message to the user');
 	}
 
-	public function deactivate(){
+	public static function deactivate(){
 	    // $query = "DROP TABLE `mod_affcoupons`";
 //	    $result = full_query($query);
 
