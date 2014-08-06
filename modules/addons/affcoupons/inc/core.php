@@ -73,19 +73,20 @@ class AffiliateCoupons {
 	}
 
 	public static function activate(){
-	    # Create Custom DB Table
-	    // $query = "CREATE TABLE IF NOT EXISTS `mod_affcoupons` (`id` INT( 1 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,`affcoupons` TEXT NOT NULL )";
-	    $query = array();
-		$query[0] = "CREATE TABLE IF NOT EXISTS `tblaffcoupons` (
+	    $query 	= array();
+		$errors = array(); //taking care of affcoupon errors
+
+		# Create Custom DB Tables for handling affcoupons
+		$query['tblaffcoupons'] = "CREATE TABLE IF NOT EXISTS `tblaffcoupons` (
 				`id` int(11) NOT NULL auto_increment,
 				`coupon` int(11) NOT NULL,
 				`aff_id` int(11) NOT NULL,
 				PRIMARY KEY  (`id`));";
-		$query[1] = "CREATE TABLE IF NOT EXISTS `tblaffcouponslanding` (
+		$query['tblaffcouponslanding'] = "CREATE TABLE IF NOT EXISTS `tblaffcouponslanding` (
 				`aff_id` int(11) NOT NULL,
 				`landing` varchar(128) NOT NULL,
 				PRIMARY KEY  (`aff_id`));";
-		$query[2] = "CREATE TABLE IF NOT EXISTS `tblaffcouponsconf` (
+		$query['tblaffcouponsconf'] = "CREATE TABLE IF NOT EXISTS `tblaffcouponsconf` (
 				`id` INT(11) NOT NULL auto_increment,
 				`type` VARCHAR( 16 ) NOT NULL,
 				`recurring` BOOL NOT NULL,
@@ -99,17 +100,19 @@ class AffiliateCoupons {
 				`existingclient` BOOL NOT NULL,
 				`label` VARCHAR( 1024 ),
 				PRIMARY KEY (`id`));";
-		foreach ($query as $q) {
+		
+		foreach ($query as $table => $q) {
 			$result = full_query($q);
+
+			if( !$result ) {
+				$errors[$table] = false;
+			}	
 		}
 
-	    // Assumes success, need to add check to output correct response
 	    return array(
-	    	'status'=>'success',
-	    	'description'=>'Affiliate coupons activated successfully!  Dont forget to click on CONFIGURE and set permissions!'
+	    	'status'=> (empty($errors) ? 'success' : 'error' ),
+	    	'description'=>( empty($errors) ? 'Affiliate coupons activated successfully!  Dont forget to click on CONFIGURE and set permissions!' : "Errors creating tables: ".implode(array_keys($errors), ', ').".")
 	    	);
-    	// return array('status'=>'error','description'=>'You can use the error status return to indicate there was a problem activating the module');
-    	// return array('status'=>'info','description'=>'You can use the info status return to display a message to the user');
 	}
 
 	public static function deactivate(){
