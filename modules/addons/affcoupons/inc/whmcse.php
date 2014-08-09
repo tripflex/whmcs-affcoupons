@@ -12,8 +12,8 @@
 
 if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
 
-if ( ! class_exists( 'AC_WHMCSe' ) ) {
-	class AC_WHMCSe {
+if ( ! class_exists( 'WHMCSe' ) ) {
+	class WHMCSe {
 
 		protected static $instance = NULL;
 

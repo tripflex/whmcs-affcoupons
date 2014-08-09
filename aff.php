@@ -2,13 +2,15 @@
 /**
  * @title Affiliate Cookie Tracking + Redirection Handler + Affliate Coupons
  *
- * @package    WHMCS 5.2.1+
- * @author     Myles McNamara (get@smyl.es)
- * @author     WHMCS WHMCS Limited (development@whmcs.com)
- * @copyright  Copyright (c) Myles McNamara 2013-2014
- * @license    GNU GPL v3+
- * @version    2.1.1
- * @link       https://gh.smyl.es/whmcs-affcoupons
+ * @package      WHMCS 5.2.1+
+ * @author       Myles McNamara (https://smyl.es)
+ * @author       WHMCS Limited (development@whmcs.com)
+ * @copyright    Copyright (c) Myles McNamara 2013-2014
+ * @license      GNU GPL v3+
+ * @version      @@version
+ * @updated      @@timestamp
+ *
+ * @link         @@link
  * 
  */
 

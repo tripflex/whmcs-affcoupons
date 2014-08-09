@@ -1,13 +1,15 @@
 <?php
 /**
- * WHMCS Affiliate Coupons
+ * @@title
  *
- * @package    WHMCS 5.2.1+
- * @author     Myles McNamara (get@smyl.es)
- * @copyright  Copyright (c) Myles McNamara 2013-2014
- * @license    GPL v3+
- * @version    2.1.2
- * @link       https://github.com/tripflex/whmcs-affcoupons
+ * @package      @@package
+ * @author       Myles McNamara (https://smyl.es)
+ * @copyright    Copyright (c) Myles McNamara 2014
+ * @license      GNU GPL v3+
+ * @version      @@version
+ * @updated      @@timestamp
+ *
+ * @link         @@link
  */
 
 if (!defined("WHMCS"))
@@ -74,5 +76,3 @@ function affcoupons_sidebar($vars) {
 function affcoupons_clientarea($vars) {
 	return AffiliateCoupons::OutputClient($vars);
 }
-
-?>

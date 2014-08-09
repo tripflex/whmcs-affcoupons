@@ -1,16 +1,15 @@
 <?php
 /**
- * WHMCS Affiliate Coupons Admin Class
+ * @@title Admin Area
  *
- * @package    WHMCS 5.2.1+
- * @author     Myles McNamara (get@smyl.es)
- * @copyright  Copyright (c) Myles McNamara 2013-2014
- * @license    GPL v3+
- * @version    2.1.2
- * @link       https://github.com/tripflex/whmcs-affcoupons
- * @Date:   2014-03-19 21:42:52
- * @Last Modified by:   Myles McNamara
- * @Last Modified time: 2014-03-23 16:15:43
+ * @package      @@package
+ * @author       Myles McNamara (https://smyl.es)
+ * @copyright    Copyright (c) Myles McNamara 2014
+ * @license      GNU GPL v3+
+ * @version      @@version
+ * @updated      @@timestamp
+ *
+ * @link         @@link
  */
 
 if (!defined("WHMCS"))
