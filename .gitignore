@@ -1,0 +1,5 @@
+/.idea/
+sftp-config.json
+/deploy/
+/wp-job-manager-field-editor/
+/node_modules/
