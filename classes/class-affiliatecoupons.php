@@ -17,10 +17,10 @@ if (!defined("WHMCS"))
 
 define( 'AC_ROOT', dirname( __FILE__ ) );
 
-require_once( AC_ROOT . "/clientarea.php" );
-require_once( AC_ROOT . "/adminarea.php" );
-require_once( AC_ROOT . "/sidebar.php" );
-require_once( AC_ROOT . "/whmcse.php" );
+require_once( AC_ROOT . "/classes/class-affiliatecoupons-clientarea.php" );
+require_once( AC_ROOT . "/classes/class-affiliatecoupons-adminarea.php" );
+require_once( AC_ROOT . "/classes/class-affiliatecoupons-sidebar.php" );
+require_once( AC_ROOT . "/classes/class-affiliatecoupons-whmcse.php" );
 
 class AffiliateCoupons {
 	const version_url = 'https://github.com/tripflex/whmcs-affcoupons/raw/master/release';
