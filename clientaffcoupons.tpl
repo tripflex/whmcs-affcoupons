@@ -84,7 +84,7 @@
 	            <div class="controls">
 	                <select name="type">
 						{foreach from=$avail_coupon item=v}
-							<option value="{$v.enc_string}">{$v.label}</option>
+							<option value="{$v.id}">{$v.label}</option>
 						{/foreach}
 	                </select>
 	            </div>
