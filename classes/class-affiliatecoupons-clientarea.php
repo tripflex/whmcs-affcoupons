@@ -37,6 +37,30 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		$this->avail_coupon = $this->get_avail_coupon();
 
 		parent::__construct();
+		$this->check_cmd();
+	}
+
+	function check_cmd(){
+
+		$cmd = filter_input( INPUT_POST, 'cmd', FILTER_SANITIZE_STRING );
+		if ( ! $cmd ) $cmd = filter_input( INPUT_GET, 'cmd', FILTER_SANITIZE_STRING );
+
+		if ( ! empty( $code ) ) {
+
+			switch ( $cmd ) {
+
+				case 'add':
+					$this->add_new_coupon();
+					break;
+
+				case 'del':
+					$this->remove_coupon();
+					break;
+
+			}
+
+		}
+
 	}
 
 	/**
@@ -118,10 +142,15 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 //		);
 		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => $this->aff_id ) );
 		$r    = mysql_fetch_array( $data );
+
 		if ( ! $r[ 'landing' ] ) {
+
 			insert_query( "tblaffcouponslanding", array( "aff_id" => $this->aff_id, "landing" => $landing ) );
+
 		} else {
+
 			update_query( "tblaffcouponslanding", array( "landing" => $landing ), array( "aff_id" => $this->aff_id ) );
+
 		}
 	}
 
@@ -144,25 +173,6 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	}
 
 	protected function get_existing_coupons() {
-
-		$cmd = filter_input( INPUT_POST, 'cmd', FILTER_SANITIZE_STRING );
-		if ( ! $cmd ) $cmd = filter_input( INPUT_GET, 'cmd', FILTER_SANITIZE_STRING );
-
-		if( ! empty( $code ) ){
-
-			switch( $cmd ){
-
-				case 'add':
-					$this->add_new_coupon();
-					break;
-
-				case 'del':
-					$this->remove_coupon();
-					break;
-
-			}
-
-		}
 
 		// Get Existing Coupons
 		$coupon = array();
@@ -300,26 +310,25 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 
 	function set_cookie( $vars ) {
 
-		if ( isset( $vars[ 'promo' ] ) ) {
+		if ( empty( $vars[ 'promo' ] ) ) return false;
 
-			$promocode = $vars[ 'promo' ];
-			$data      = select_query( 'tblpromotions', 'id', array( "code" => $promocode ) );
+		$promocode = $vars[ 'promo' ];
+		$data      = select_query( 'tblpromotions', 'id', array( "code" => $promocode ) );
 
-			if ( mysql_num_rows( $data ) ) {
+		if ( mysql_num_rows( $data ) ) {
 
-				$row      = mysql_fetch_array( $data );
-				$couponid = $row[ 0 ];
-				$pdata    = select_query( 'tblaffcoupons', 'aff_id', array( "coupon" => $couponid ) );
+			$row      = mysql_fetch_array( $data );
+			$couponid = $row[ 0 ];
+			$pdata    = select_query( 'tblaffcoupons', 'aff_id', array( "coupon" => $couponid ) );
 
-				if ( mysql_num_rows( $pdata ) ) {
+			if ( mysql_num_rows( $pdata ) ) {
 
-					$prow        = mysql_fetch_array( $pdata );
-					$affid       = $prow[ 0 ];
-					$checkcookie = WHMCS_Cookie::get( "AffiliateID", TRUE );
+				$prow        = mysql_fetch_array( $pdata );
+				$affid       = $prow[ 0 ];
+				$checkcookie = WHMCS_Cookie::get( "AffiliateID", TRUE );
 
-					if ( $affid ) WHMCS_Cookie::set( 'AffiliateID', $affid, '3m' );
+				if ( $affid ) WHMCS_Cookie::set( 'AffiliateID', $affid, '3m' );
 
-				}
 			}
 		}
 
