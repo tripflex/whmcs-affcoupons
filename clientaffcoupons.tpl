@@ -9,12 +9,12 @@
         <div id="notice" class="alert alert-{if !$notice_type}success{else}{$notice_type}{/if}" {if !$notice}style="display: none;"{/if}>{$notice}</div>
     </div>
     <form method="POST" action="{$index_page}?m=affcoupons" name="landingpage" id="landingpageForm">
-        <input type="hidden" name="cmd" value="modlanding">
+        <input type="hidden" name="cmd" value="modlanding" />
         <div class="well textcenter">
-            <input type="text" name="landing" id="landing" value="{$landing}" class="bigfield">
+            <input type="text" name="landing" id="landing" value="{$landing}" class="bigfield" />
             <div class="internalpaadding">
                 <p>This option will control where your referrals will be redirected after visiting your referral link.</p>
-                <input type="submit" name="Submit" value="Update" class="btn btn-primary btn-large" id="updatelanding">
+                <input type="submit" name="Submit" value="Update" class="btn btn-primary btn-large" id="updatelanding" />
             </div>
         </div>
     </form>
@@ -71,12 +71,12 @@
 	    </div>
 	</div>
 	<form action="{$index_page}?m=affcoupons" method="POST" name="addcoupons" class="form-horizontal">
-	    <input type="hidden" name="cmd" value="add">
+	    <input type="hidden" name="cmd" value="add" />
 	    <div class="well">
 	        <div class="control-group">
 	            <label for="code" class="control-label">Coupon Code:</label>
 	            <div class="controls">
-	                <input type="text" name="code" id="code">
+	                <input type="text" name="code" id="code" />
 	            </div>
 	        </div>
 	        <div class="control-group">
@@ -91,7 +91,7 @@
 	        </div>
 	        <div class="control-group">
 	            <div class="controls">
-	                <input type="submit" name="Submit" value="Add" class="btn btn-primary btn-large">
+	                <input type="submit" name="Submit" value="Add" class="btn btn-primary btn-large" />
 	            </div>
 	        </div>
 	    </div>
