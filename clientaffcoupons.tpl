@@ -1,5 +1,5 @@
+<!-- start affcoupons-ajax -->
 <div id="affcoupons-ajax">
-
     <div class="page-header">
         <div class="styled_title">
             <h2>Landing Page</h2>
@@ -33,37 +33,37 @@
 	            <th>Uses</th>
 	        </tr>
 	    </thead>
-
-	    {if !$coupon}
-			<tbody><tr><td colspan="5" style="text-align: center; font-weight: bold;">No Coupons Found</td></tr></tbody>
-	    {else}
-		    <tbody>
-				{foreach from=$coupon key=k item=v}
-					<tr>
-						<td>
-							<a href="{$index_page}?m=affcoupons&cmd=del&cid={$v.id}"><img src="modules/addons/affcoupons/inc/images/delete.png" alt="Delete"></a>
-						</td>
-						<td>
-							{$v.code}
-						</td>
-						<td>
-							{$v.type}
-						</td>
-						<td>
-						{if $v.type == "Percentage"}
-							{$v.value|string_format:"%d"}
-						{else}
-							{$v.value}
-						{/if}
-						</td>
-						<td>
-							{$v.uses}
-						</td>
-					</tr>
-				{/foreach}
-		    </tbody>
-	    {/if}
-
+		<tbody>
+		{if !$coupon}
+			<tr>
+				<td colspan="5" style="text-align: center; font-weight: bold;">No Coupons Found</td>
+			</tr>
+		{else}
+			{foreach from=$coupon key=k item=v}
+				<tr>
+					<td>
+						<a href="{$index_page}?m=affcoupons&cmd=del&cid={$v.id}"><img src="modules/addons/affcoupons/inc/images/delete.png" alt="Delete"></a>
+					</td>
+					<td>
+						{$v.code}
+					</td>
+					<td>
+						{$v.type}
+					</td>
+					<td>
+					{if $v.type == "Percentage"}
+						{$v.value|string_format:"%d"}
+					{else}
+						{$v.value}
+					{/if}
+					</td>
+					<td>
+						{$v.uses}
+					</td>
+				</tr>
+			{/foreach}
+		{/if}
+		</tbody>
 	</table>
 	<div class="page-header">
 	    <div class="styled_title">
@@ -96,7 +96,4 @@
 	        </div>
 	    </div>
 	</form>
-
-
-</div>
-<!-- end affcoupons-ajax -->
+</div><!-- end affcoupons-ajax -->
