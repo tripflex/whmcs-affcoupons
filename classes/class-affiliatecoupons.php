@@ -32,8 +32,11 @@ class AffiliateCoupons {
 
 	protected static $instance = NULL;
 	public           $debug    = TRUE;
+	protected        $url;
 
 	public function __construct() {
+
+		$this->url = AC_WHMCSe::get_module_url( 'affcoupons' );
 
 	}
 
@@ -185,4 +188,7 @@ class AffiliateCoupons {
 		return self::$instance;
 	}
 
+	function get_index_page(){
+		return self::INDEX_PAGE;
+	}
 }
