@@ -31,7 +31,7 @@ class AffiliateCoupons_Sidebar extends AffiliateCoupons {
 
 		$sidebar = '<span class="header">
 						<img src="images/icons/addonmodules.png" class="absmiddle" width="16" height="16" />
-						 Pushover Notifications
+						 Affiliate Coupons
 					</span>
 					<ul class="menu">
 				        <li><a target="_blank" href="' . $modulelink . '">GitHub</a></li>
