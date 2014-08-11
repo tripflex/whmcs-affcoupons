@@ -15,6 +15,7 @@
 if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
 if ( ! defined( 'AC_CLASS_ROOT' ) ) define( 'AC_CLASS_ROOT', dirname( __FILE__ ) );
 
+require_once( AC_CLASS_ROOT . "/class-ac-whmcse.php" );
 require_once( AC_CLASS_ROOT . "/class-affiliatecoupons-clientarea.php" );
 require_once( AC_CLASS_ROOT . "/class-affiliatecoupons-adminarea.php" );
 require_once( AC_CLASS_ROOT . "/class-affiliatecoupons-sidebar.php" );
