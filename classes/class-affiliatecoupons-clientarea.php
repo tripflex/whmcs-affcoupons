@@ -16,133 +16,88 @@ if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
 
 class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 
-	protected static $instance = null;
-	protected static $aff_id;
-	protected static $clientid;
-	protected static $landing;
-	protected static $coupon;
-	protected static $avail_coupon;
-	protected static $notice;
-	protected static $notice_type;
+	protected static $instance = NULL;
 
-	public static function get_instance() {
-
-		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
-			self::$instance = new self;
-		}
-
-		return self::$instance;
-	}
+	private $aff_id;
+	private $avail_coupon;
+	private $clientid;
+	private $coupon;
+	private $landing;
+	private $notice;
+	private $notice_type;
 
 	public function __construct() {
 
-		define( "CLIENTAREA", true );
-		self::$clientid     = self::get_clientid();
-		self::$aff_id       = self::get_aff_id();
-		self::$landing      = self::get_landing();
-		self::$coupon       = self::get_existing_coupons();
-		self::$avail_coupon = self::get_avail_coupon();
-	}
+		define( "CLIENTAREA", TRUE );
 
-	public function head( $vars ) {
+		$this->clientid     = $this->get_clientid();
+		$this->aff_id       = $this->get_aff_id();
+		$this->landing      = $this->get_landing();
+		$this->coupon       = $this->get_existing_coupons();
+		$this->avail_coupon = $this->get_avail_coupon();
 
-		$redirect = self::check_redirect();
-		if ( $redirect ) {
-			$return_html = "<script>window.location.replace('" . $redirect . "');</script>";
-		} else {
-			$return_html = '<script src="' . AC_WHMCSe::get_module_url( 'affcoupons' ) . '/inc/js/affiliates.js"></script>';
-			$return_html .= '<input type="hidden" id="index_page" value="' . parent::$index_page . '">';
-			$return_html .= '<input type="hidden" id="script_name" value="' . $vars[ 'SCRIPT_NAME' ] . '">';
-		}
-
-		return $return_html;
-	}
-
-	protected function check_redirect() {
-		$affid = filter_input( INPUT_GET, 'affid', FILTER_SANITIZE_NUMBER_INT );
-		$r = select_query( "tblaffcouponslanding", "landing", array( "aff_id" => $affid ) );
-		$data = mysql_fetch_array( $r );
-		if( ! empty( $data[ 'landing' ] ) ) return $data[ 'landing' ];
-
-		return false;
-	}
-
-	public function output( $vars ) {
-
-		return array(
-			'pagetitle'    => 'Affiliate Promo Codes',
-			'breadcrumb'   => array( parent::$index_page . '?m=affcoupons' => 'Affiliate Promo Code' ),
-			'templatefile' => 'clientaffcoupons',
-			'requirelogin' => true, # or false
-			'forcessl'     => true,
-			'vars'         => array(
-				'aff_id'       => self::$aff_id,
-				'clientid'     => self::$clientid,
-				'landing'      => self::$landing,
-				'coupon'       => self::$coupon,
-				'avail_coupon' => self::$avail_coupon,
-				'notice'       => self::$notice,
-				'notice_type'  => self::$notice_type,
-				'index_page'   => parent::$index_page
-			),
-		);
-	}
-
-	/**
-	 * Get admin created promos that clients can use
-	 * @return array Returns an array with the base64 encoded string values and label
-	 */
-	protected function get_avail_coupon() {
-
-		$avail_coupon = array();
-		$data         = select_query( "tblaffcouponsconf", "*", array() );
-		while ( $val = mysql_fetch_array( $data ) ) {
-			$type                                         = $val[ 'type' ];
-			$recurring                                    = $val[ 'recurring' ];
-			$value                                        = $val[ 'value' ];
-			$cycles                                       = $val[ 'cycles' ];
-			$appliesto                                    = $val[ 'appliesto' ];
-			$expirationdate                               = $val[ 'expirationdate' ];
-			$maxuses                                      = $val[ 'maxuses' ];
-			$applyonce                                    = $val[ 'applyonce' ];
-			$newsignups                                   = $val[ 'newsignups' ];
-			$existingclient                               = $val[ 'existingclient' ];
-			$label                                        = $val[ 'label' ];
-			$string                                       = "$type@$recurring@$value@$cycles@$appliesto@$expirationdate@$maxuses@$applyonce@$newsignups@$existingclient";
-			$enc_string                                   = base64_encode( $string );
-			$avail_coupon[ $val[ 'id' ] ][ 'label' ]      = $label;
-			$avail_coupon[ $val[ 'id' ] ][ 'enc_string' ] = $enc_string;
-		}
-
-		return $avail_coupon;
-	}
-
-	/**
-	 * Get affiliate ID based off logged in client id from db
-	 * @return integer affiliate id
-	 */
-	protected function get_aff_id() {
-
-		$data = select_query( 'tblaffiliates', 'id', array( 'clientid' => self::$clientid ) );
-		$r    = mysql_fetch_array( $data );
-
-		return $r[ 0 ];
+		parent::__construct();
 	}
 
 	/**
 	 * Get logged in client id from session
+	 *
 	 * @return integer current logged in user session uid
 	 */
 	protected function get_clientid() {
 
 		global $CONFIG;
 
-		if ( isset( $_SESSION[ 'uid' ] ) ) {
-			return intval( $_SESSION[ 'uid' ] );
+		if ( isset( $_SESSION[ 'uid' ] ) ) return intval( $_SESSION[ 'uid' ] );
+
+		return 0;
+	}
+
+	/**
+	 * Get affiliate ID based off logged in client id from db
+	 *
+	 * @return integer affiliate id
+	 */
+	protected function get_aff_id() {
+
+		$data = select_query( 'tblaffiliates', 'id', array( 'clientid' => $this->clientid ) );
+		$r    = mysql_fetch_array( $data );
+
+		if( ! empty( $r[ 0 ] ) ) return $r[ 0 ];
+
+		return false;
+	}
+
+	protected function get_landing() {
+
+		// Check if landing URL was sent in POST first, meaning the update button was pressed
+		if ( isset( $_POST[ 'landing' ] ) ) {
+
+			$landing_sanitized = filter_input( INPUT_POST, 'landing', FILTER_SANITIZE_URL );
+			$landing_validated = filter_var( $landing_sanitized, FILTER_VALIDATE_URL );
+
+			if ( $landing_validated ) {
+
+				$landing = $landing_validated;
+				$this->set_landing( $landing );
+				$this->set_notice( "Landing page was updated" );
+
+			} else {
+
+				// Invalid URL used, lets get the entry saved in the db
+				$landing = $this->get_landing_from_db();
+				$this->set_notice( "There was an error updating the landing page", "danger" );
+
+			}
+
 		} else {
-			return 0;
+
+			// landing wasn't in POST, let's attempt to get it from the db
+			$landing = $this->get_landing_from_db();
+
 		}
+
+		return $landing;
 	}
 
 	/**
@@ -153,75 +108,70 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	protected function set_landing( $landing ) {
 
 		//  TODO: add another check to validate and sanitize
-		self::$landing = $landing;
-		//		// Attempt to insert new landing entry in db, if existing entry update existing
-		//		$query = mysql_query('INSERT INTO tblaffcouponslanding (aff_id, landing)
-		//								VALUES ('. self::$aff_id .', ' . $landing .')
-		//								ON DUPLICATE KEY
-		//									UPDATE landing=\'$landing\'
-		//				');
-		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => self::$aff_id ) );
+		$this->landing = $landing;
+// Attempt to insert new landing entry in db, if existing entry update existing
+//		$query = full_query("
+//			INSERT INTO tblaffcouponslanding (aff_id, landing)
+//			VALUES ('". $this->aff_id ."', '" . $landing . "')
+//			ON DUPLICATE KEY
+//			UPDATE landing='" . $landing . "'"
+//		);
+		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => $this->aff_id ) );
 		$r    = mysql_fetch_array( $data );
 		if ( ! $r[ 'landing' ] ) {
-			insert_query( "tblaffcouponslanding", array( "aff_id" => self::$aff_id, "landing" => $landing ) );
+			insert_query( "tblaffcouponslanding", array( "aff_id" => $this->aff_id, "landing" => $landing ) );
 		} else {
-			update_query( "tblaffcouponslanding", array( "landing" => $landing ), array( "aff_id" => self::$aff_id ) );
+			update_query( "tblaffcouponslanding", array( "landing" => $landing ), array( "aff_id" => $this->aff_id ) );
 		}
+	}
+
+	protected function set_notice( $message, $type = NULL ) {
+
+		$this->notice = $message;
+		if ( $type ) $this->notice_type = $type;
+
 	}
 
 	protected function get_landing_from_db() {
 
-		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => self::$aff_id ) );
+		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => $this->aff_id ) );
 		$r    = mysql_fetch_array( $data );
-		if ( ! $r[ 'landing' ] ) {
-			$landing = AC_WHMCSe::get_url();
-		} else {
-			$landing = $r[ 'landing' ];
-		}
 
-		return $landing;
-	}
+		if ( empty( $r[ 'landing' ] ) ) return AC_WHMCSe::get_url();
 
-	protected function get_landing() {
+		return $r[ 'landing' ];
 
-		// Check if landing URL was sent in POST first, meaning the update button was pressed
-		if ( isset( $_POST[ 'landing' ] ) ) {
-			$landing_sanitized = filter_input( INPUT_POST, 'landing', FILTER_SANITIZE_URL );
-			$landing_validated = filter_var( $landing_sanitized, FILTER_VALIDATE_URL );
-			if ( $landing_validated ) {
-				$landing = $landing_validated;
-				self::set_landing( $landing );
-				self::set_notice( "Landing page was updated" );
-			} else {
-				//                Invalid URL used, lets get the entry saved in the db
-				$landing = self::get_landing_from_db();
-				self::set_notice( "There was an error updating the landing page", "danger" );
-			}
-		} else {
-			// landing wasn't in POST, let's attempt to get it from the db
-			$landing = self::get_landing_from_db();
-		}
-
-		return $landing;
 	}
 
 	protected function get_existing_coupons() {
 
-		if ( isset( $_POST[ 'cmd' ] ) && $_POST[ 'cmd' ] === 'add' ) {
-			self::add_new_coupon();
+		$cmd = filter_input( INPUT_POST, 'cmd', FILTER_SANITIZE_STRING );
+		if ( ! $cmd ) $cmd = filter_input( INPUT_GET, 'cmd', FILTER_SANITIZE_STRING );
+
+		if( ! empty( $code ) ){
+
+			switch( $cmd ){
+
+				case 'add':
+					$this->add_new_coupon();
+					break;
+
+				case 'del':
+					$this->remove_coupon();
+					break;
+
+			}
+
 		}
 
-		if ( isset( $_GET[ 'cmd' ] ) && $_GET[ 'cmd' ] === 'del' ) {
-			self::remove_coupon();
-		}
-
-		$aff_id = self::$aff_id;
 		// Get Existing Coupons
 		$coupon = array();
 		$sql    = "SELECT p.code, p.type, p.value, p.uses, p.id
 				FROM tblpromotions p, tblaffcoupons a
-				WHERE a.aff_id = '$aff_id' AND a.coupon = p.id";
+				WHERE a.aff_id = '" . $this->aff_id . "' AND a.coupon = p.id";
+
 		$data   = mysql_query( $sql );
+
 		while ( $r = mysql_fetch_array( $data ) ) {
 			$coupon[ $r[ 4 ] ][ 'code' ]  = $r[ 0 ];
 			$coupon[ $r[ 4 ] ][ 'type' ]  = $r[ 1 ];
@@ -259,62 +209,130 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 				$data   = select_query( 'tblpromotions', 'id', array( "code" => $code ) );
 				$r      = mysql_fetch_array( $data );
 				$newcid = $r[ 0 ];
-				insert_query( "tblaffcoupons", array( "coupon" => $newcid, "aff_id" => self::$aff_id ) );
-				self::set_notice( "Coupon $newcid added successfully." );
+				insert_query( "tblaffcoupons", array( "coupon" => $newcid, "aff_id" => $this->aff_id ) );
+				$this->set_notice( "Coupon $newcid added successfully." );
 			} else {
-				self::set_notice( "Coupon already exists." );
+				$this->set_notice( "Coupon already exists." );
 			}
 		} else {
-			self::set_notice( 'Invalid coupon code', 'danger' );
+			$this->set_notice( 'Invalid coupon code', 'danger' );
 		}
 	}
 
-	protected function remove_coupon() {
+	protected function remove_coupon( $coupon_id = null ) {
 
-		$coupon_id = filter_input( INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT );
-		if ( $coupon_id ) {
-			$data = select_query( 'tblaffcoupons', 'aff_id', array( 'coupon' => $coupon_id, 'aff_id' => self::$aff_id ) );
-			if ( mysql_num_rows( $data ) ) {
-				delete_query( "tblaffcoupons", "coupon='$coupon_id'" );
-				delete_query( "tblpromotions", "id='$coupon_id'" );
-				self::set_notice( "Coupon $coupon_id has been deleted." );
-			} else {
-				self::set_notice( "You do not own Coupon $coupon_id", 'danger' );
-			}
+		if( ! $coupon_id ) $coupon_id = filter_input( INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT );
+		if( ! $coupon_id ) return false;
+
+		$data = select_query( 'tblaffcoupons', 'aff_id', array( 'coupon' => $coupon_id, 'aff_id' => $this->aff_id ) );
+
+		if ( mysql_num_rows( $data ) ) {
+
+			delete_query( "tblaffcoupons", "coupon='{$coupon_id}'" );
+			delete_query( "tblpromotions", "id='{$coupon_id}'" );
+			$this->set_notice( "Coupon {$coupon_id} has been deleted." );
+
 		} else {
-			self::set_notice( "Error removing coupon", 'danger' );
+
+			$this->set_notice( "You do not own Coupon {$coupon_id}", 'danger' );
+
 		}
 	}
 
-	protected function set_notice( $message, $type = null ) {
+	/**
+	 * Get admin created promos that clients can use
+	 *
+	 * @return array Returns an array with the base64 encoded string values and label
+	 */
+	protected function get_avail_coupon() {
 
-		self::$notice = $message;
-		if ( $type ) {
-			self::$notice_type = $type;
+		$avail_coupon = array();
+		$data         = select_query( "tblaffcouponsconf", "*", array() );
+
+		while ( $val = mysql_fetch_array( $data ) ) {
+			$avail_coupon[ $val[ 'id' ] ][ 'label' ]      = $val[ 'label' ];
+			$avail_coupon[ $val[ 'id' ] ][ 'id' ]         = $val[ 'id' ];
 		}
+
+		return $avail_coupon;
+	}
+
+	public function head( $vars ) {
+
+		$redirect = $this->check_redirect();
+		if ( $redirect ) return "<script>window.location.replace('" . $redirect . "');</script>";
+
+		$return_html = '<script src="' . $this->url . '/assets/js/clientarea.min.js"></script>';
+
+		return $return_html;
+	}
+
+	protected function check_redirect() {
+
+		$affid = filter_input( INPUT_GET, 'affid', FILTER_SANITIZE_NUMBER_INT );
+		$r     = select_query( "tblaffcouponslanding", "landing", array( "aff_id" => $affid ) );
+		$data  = mysql_fetch_array( $r );
+		if ( ! empty( $data[ 'landing' ] ) ) return $data[ 'landing' ];
+
+		return FALSE;
+	}
+
+	public function output( $vars ) {
+
+		return array(
+			'pagetitle'    => 'Affiliate Promo Codes',
+			'breadcrumb'   => array( $this->get_index_page() . '?m=affcoupons' => 'Affiliate Promo Code' ),
+			'templatefile' => 'clientaffcoupons',
+			'requirelogin' => TRUE, # or false
+			'forcessl'     => TRUE,
+			'vars'         => array(
+				'aff_id'       => $this->aff_id,
+				'clientid'     => $this->clientid,
+				'landing'      => $this->landing,
+				'coupon'       => $this->coupon,
+				'avail_coupon' => $this->avail_coupon,
+				'notice'       => $this->notice,
+				'notice_type'  => $this->notice_type,
+				'index_page'   => $this->get_index_page()
+			),
+		);
 	}
 
 	function set_cookie( $vars ) {
 
 		if ( isset( $vars[ 'promo' ] ) ) {
+
 			$promocode = $vars[ 'promo' ];
-			$data      = select_query( 'tblpromotions', 'id', array( "code" => "$promocode" ) );
+			$data      = select_query( 'tblpromotions', 'id', array( "code" => $promocode ) );
+
 			if ( mysql_num_rows( $data ) ) {
+
 				$row      = mysql_fetch_array( $data );
 				$couponid = $row[ 0 ];
 				$pdata    = select_query( 'tblaffcoupons', 'aff_id', array( "coupon" => $couponid ) );
+
 				if ( mysql_num_rows( $pdata ) ) {
+
 					$prow        = mysql_fetch_array( $pdata );
 					$affid       = $prow[ 0 ];
-					$checkcookie = WHMCS_Cookie::get( "AffiliateID", true );
-					if ( $affid ) {
-						// update_query("tblaffiliates",array("visitors"=>"+1"),array("id"=>$affid));
-						WHMCS_Cookie::set( 'AffiliateID', $affid, '3m' );
-					}
+					$checkcookie = WHMCS_Cookie::get( "AffiliateID", TRUE );
+
+					if ( $affid ) WHMCS_Cookie::set( 'AffiliateID', $affid, '3m' );
+
 				}
 			}
 		}
 
+	}
+
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( NULL == self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
 	}
 }
 
