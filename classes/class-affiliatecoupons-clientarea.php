@@ -14,11 +14,9 @@
 
 if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
 
-define( 'AC_ROOT', dirname( __FILE__ ) );
-
 class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 
-	protected static $instance = NULL;
+	protected static $instance = null;
 	protected static $aff_id;
 	protected static $clientid;
 	protected static $landing;
@@ -27,17 +25,17 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	protected static $notice;
 	protected static $notice_type;
 
-	public static function get_instance () {
+	public static function get_instance() {
 
 		// If the single instance hasn't been set, set it now.
-		if ( NULL == self::$instance ) {
+		if ( null == self::$instance ) {
 			self::$instance = new self;
 		}
 
 		return self::$instance;
 	}
 
-	public function __construct () {
+	public function __construct() {
 
 		define( "CLIENTAREA", true );
 		self::$clientid     = self::get_clientid();
@@ -47,27 +45,30 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		self::$avail_coupon = self::get_avail_coupon();
 	}
 
-	public function head ( $vars ) {
+	public function head( $vars ) {
 
 		$redirect = self::check_redirect();
 		if ( $redirect ) {
-			$return_html = "<script>window.location.replace('" . self::$landing . "');</script>";
+			$return_html = "<script>window.location.replace('" . $redirect . "');</script>";
 		} else {
 			$return_html = '<script src="' . AC_WHMCSe::get_module_url( 'affcoupons' ) . '/inc/js/affiliates.js"></script>';
 			$return_html .= '<input type="hidden" id="index_page" value="' . parent::$index_page . '">';
-			$return_html .= '<input type="hidden" id="script_name" value="' . $vars['SCRIPT_NAME'] . '">';
+			$return_html .= '<input type="hidden" id="script_name" value="' . $vars[ 'SCRIPT_NAME' ] . '">';
 		}
 
 		return $return_html;
 	}
 
-	protected function check_redirect () {
+	protected function check_redirect() {
+		$affid = filter_input( INPUT_GET, 'affid', FILTER_SANITIZE_NUMBER_INT );
+		$r = select_query( "tblaffcouponslanding", "landing", array( "aff_id" => $affid ) );
+		$data = mysql_fetch_array( $r );
+		if( ! empty( $data[ 'landing' ] ) ) return $data[ 'landing' ];
 
-		//        Coming soon, should no longer require replacing aff.php file
 		return false;
 	}
 
-	public function output ( $vars ) {
+	public function output( $vars ) {
 
 		return array(
 			'pagetitle'    => 'Affiliate Promo Codes',
@@ -92,26 +93,26 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	 * Get admin created promos that clients can use
 	 * @return array Returns an array with the base64 encoded string values and label
 	 */
-	protected function get_avail_coupon () {
+	protected function get_avail_coupon() {
 
 		$avail_coupon = array();
 		$data         = select_query( "tblaffcouponsconf", "*", array() );
 		while ( $val = mysql_fetch_array( $data ) ) {
-			$type                                     = $val['type'];
-			$recurring                                = $val['recurring'];
-			$value                                    = $val['value'];
-			$cycles                                   = $val['cycles'];
-			$appliesto                                = $val['appliesto'];
-			$expirationdate                           = $val['expirationdate'];
-			$maxuses                                  = $val['maxuses'];
-			$applyonce                                = $val['applyonce'];
-			$newsignups                               = $val['newsignups'];
-			$existingclient                           = $val['existingclient'];
-			$label                                    = $val['label'];
-			$string                                   = "$type@$recurring@$value@$cycles@$appliesto@$expirationdate@$maxuses@$applyonce@$newsignups@$existingclient";
-			$enc_string                               = base64_encode( $string );
-			$avail_coupon[ $val['id'] ]['label']      = $label;
-			$avail_coupon[ $val['id'] ]['enc_string'] = $enc_string;
+			$type                                         = $val[ 'type' ];
+			$recurring                                    = $val[ 'recurring' ];
+			$value                                        = $val[ 'value' ];
+			$cycles                                       = $val[ 'cycles' ];
+			$appliesto                                    = $val[ 'appliesto' ];
+			$expirationdate                               = $val[ 'expirationdate' ];
+			$maxuses                                      = $val[ 'maxuses' ];
+			$applyonce                                    = $val[ 'applyonce' ];
+			$newsignups                                   = $val[ 'newsignups' ];
+			$existingclient                               = $val[ 'existingclient' ];
+			$label                                        = $val[ 'label' ];
+			$string                                       = "$type@$recurring@$value@$cycles@$appliesto@$expirationdate@$maxuses@$applyonce@$newsignups@$existingclient";
+			$enc_string                                   = base64_encode( $string );
+			$avail_coupon[ $val[ 'id' ] ][ 'label' ]      = $label;
+			$avail_coupon[ $val[ 'id' ] ][ 'enc_string' ] = $enc_string;
 		}
 
 		return $avail_coupon;
@@ -121,24 +122,24 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	 * Get affiliate ID based off logged in client id from db
 	 * @return integer affiliate id
 	 */
-	protected function get_aff_id () {
+	protected function get_aff_id() {
 
 		$data = select_query( 'tblaffiliates', 'id', array( 'clientid' => self::$clientid ) );
 		$r    = mysql_fetch_array( $data );
 
-		return $r[0];
+		return $r[ 0 ];
 	}
 
 	/**
 	 * Get logged in client id from session
 	 * @return integer current logged in user session uid
 	 */
-	protected function get_clientid () {
+	protected function get_clientid() {
 
 		global $CONFIG;
 
-		if ( isset( $_SESSION['uid'] ) ) {
-			return intval( $_SESSION['uid'] );
+		if ( isset( $_SESSION[ 'uid' ] ) ) {
+			return intval( $_SESSION[ 'uid' ] );
 		} else {
 			return 0;
 		}
@@ -149,7 +150,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	 *
 	 * @param string $landing sanitized and validated URL
 	 */
-	protected function set_landing ( $landing ) {
+	protected function set_landing( $landing ) {
 
 		//  TODO: add another check to validate and sanitize
 		self::$landing = $landing;
@@ -161,30 +162,30 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		//				');
 		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => self::$aff_id ) );
 		$r    = mysql_fetch_array( $data );
-		if ( ! $r['landing'] ) {
+		if ( ! $r[ 'landing' ] ) {
 			insert_query( "tblaffcouponslanding", array( "aff_id" => self::$aff_id, "landing" => $landing ) );
 		} else {
 			update_query( "tblaffcouponslanding", array( "landing" => $landing ), array( "aff_id" => self::$aff_id ) );
 		}
 	}
 
-	protected function get_landing_from_db () {
+	protected function get_landing_from_db() {
 
 		$data = select_query( 'tblaffcouponslanding', 'landing', array( 'aff_id' => self::$aff_id ) );
 		$r    = mysql_fetch_array( $data );
-		if ( ! $r['landing'] ) {
+		if ( ! $r[ 'landing' ] ) {
 			$landing = AC_WHMCSe::get_url();
 		} else {
-			$landing = $r['landing'];
+			$landing = $r[ 'landing' ];
 		}
 
 		return $landing;
 	}
 
-	protected function get_landing () {
+	protected function get_landing() {
 
 		// Check if landing URL was sent in POST first, meaning the update button was pressed
-		if ( isset( $_POST['landing'] ) ) {
+		if ( isset( $_POST[ 'landing' ] ) ) {
 			$landing_sanitized = filter_input( INPUT_POST, 'landing', FILTER_SANITIZE_URL );
 			$landing_validated = filter_var( $landing_sanitized, FILTER_VALIDATE_URL );
 			if ( $landing_validated ) {
@@ -204,11 +205,15 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		return $landing;
 	}
 
-	protected function get_existing_coupons () {
+	protected function get_existing_coupons() {
 
-		if ( isset( $_POST['cmd'] ) && $_POST['cmd'] === 'add' ) self::add_new_coupon();
+		if ( isset( $_POST[ 'cmd' ] ) && $_POST[ 'cmd' ] === 'add' ) {
+			self::add_new_coupon();
+		}
 
-		if ( isset( $_GET['cmd'] ) && $_GET['cmd'] === 'del' ) self::remove_coupon();
+		if ( isset( $_GET[ 'cmd' ] ) && $_GET[ 'cmd' ] === 'del' ) {
+			self::remove_coupon();
+		}
 
 		$aff_id = self::$aff_id;
 		// Get Existing Coupons
@@ -218,20 +223,20 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 				WHERE a.aff_id = '$aff_id' AND a.coupon = p.id";
 		$data   = mysql_query( $sql );
 		while ( $r = mysql_fetch_array( $data ) ) {
-			$coupon[ $r[4] ]['code']  = $r[0];
-			$coupon[ $r[4] ]['type']  = $r[1];
-			$coupon[ $r[4] ]['value'] = $r[2];
-			$coupon[ $r[4] ]['uses']  = $r[3];
-			$coupon[ $r[4] ]['id']    = $r[4];
+			$coupon[ $r[ 4 ] ][ 'code' ]  = $r[ 0 ];
+			$coupon[ $r[ 4 ] ][ 'type' ]  = $r[ 1 ];
+			$coupon[ $r[ 4 ] ][ 'value' ] = $r[ 2 ];
+			$coupon[ $r[ 4 ] ][ 'uses' ]  = $r[ 3 ];
+			$coupon[ $r[ 4 ] ][ 'id' ]    = $r[ 4 ];
 		}
 
 		return $coupon;
 	}
 
-	protected function add_new_coupon () {
+	protected function add_new_coupon() {
 
 		//        TODO: sanitize and validate selected coupon
-		$enc_type = $_POST['type'];
+		$enc_type = $_POST[ 'type' ];
 		$code     = filter_input( INPUT_POST, 'code', FILTER_SANITIZE_STRING );
 		if ( $code ) {
 			$dec_type = base64_decode( $enc_type );
@@ -239,21 +244,21 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 			$data = select_query( 'tblpromotions', 'id', array( 'code' => $code ) );
 			if ( ! mysql_num_rows( $data ) ) {
 				insert_query( "tblpromotions", array(
-						"code"           => $code,
-						"type"           => $atype,
-						"recurring"      => $arecurring,
-						"value"          => $avalue,
-						"cycles"         => $acycles,
-						"appliesto"      => $aappliesto,
-						"expirationdate" => $aexpirationdate,
-						"maxuses"        => $amaxuses,
-						"applyonce"      => $aapplyonce,
-						"newsignups"     => $anewsignups,
-						"existingclient" => $aexistingclient
-					) );
+					"code"           => $code,
+					"type"           => $atype,
+					"recurring"      => $arecurring,
+					"value"          => $avalue,
+					"cycles"         => $acycles,
+					"appliesto"      => $aappliesto,
+					"expirationdate" => $aexpirationdate,
+					"maxuses"        => $amaxuses,
+					"applyonce"      => $aapplyonce,
+					"newsignups"     => $anewsignups,
+					"existingclient" => $aexistingclient
+				) );
 				$data   = select_query( 'tblpromotions', 'id', array( "code" => $code ) );
 				$r      = mysql_fetch_array( $data );
-				$newcid = $r[0];
+				$newcid = $r[ 0 ];
 				insert_query( "tblaffcoupons", array( "coupon" => $newcid, "aff_id" => self::$aff_id ) );
 				self::set_notice( "Coupon $newcid added successfully." );
 			} else {
@@ -264,7 +269,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		}
 	}
 
-	protected function remove_coupon () {
+	protected function remove_coupon() {
 
 		$coupon_id = filter_input( INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT );
 		if ( $coupon_id ) {
@@ -281,12 +286,35 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		}
 	}
 
-	protected function set_notice ( $message, $type = NULL ) {
+	protected function set_notice( $message, $type = null ) {
 
 		self::$notice = $message;
 		if ( $type ) {
 			self::$notice_type = $type;
 		}
+	}
+
+	function set_cookie( $vars ) {
+
+		if ( isset( $vars[ 'promo' ] ) ) {
+			$promocode = $vars[ 'promo' ];
+			$data      = select_query( 'tblpromotions', 'id', array( "code" => "$promocode" ) );
+			if ( mysql_num_rows( $data ) ) {
+				$row      = mysql_fetch_array( $data );
+				$couponid = $row[ 0 ];
+				$pdata    = select_query( 'tblaffcoupons', 'aff_id', array( "coupon" => $couponid ) );
+				if ( mysql_num_rows( $pdata ) ) {
+					$prow        = mysql_fetch_array( $pdata );
+					$affid       = $prow[ 0 ];
+					$checkcookie = WHMCS_Cookie::get( "AffiliateID", true );
+					if ( $affid ) {
+						// update_query("tblaffiliates",array("visitors"=>"+1"),array("id"=>$affid));
+						WHMCS_Cookie::set( 'AffiliateID', $affid, '3m' );
+					}
+				}
+			}
+		}
+
 	}
 }
 
