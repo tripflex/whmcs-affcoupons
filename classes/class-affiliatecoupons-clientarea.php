@@ -273,6 +273,14 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		$redirect = $this->check_redirect();
 		if ( $redirect ) return "<script>window.location.replace('" . $redirect . "');</script>";
 
+		$return_html = '<link href="' . $this->url . '/assets/css/vendor.min.css" rel="stylesheet">';
+		$return_html .= '<link href="' . $this->url . '/assets/css/clientarea.min.css" rel="stylesheet">';
+
+		return $return_html;
+	}
+
+	public function footer( $vars ){
+
 		$return_html = '<script src="' . $this->url . '/assets/js/clientarea.min.js"></script>';
 
 		return $return_html;
