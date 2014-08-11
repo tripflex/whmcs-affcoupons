@@ -50,7 +50,11 @@
 							{$v.type}
 						</td>
 						<td>
+						{if $v.type == "Percentage"}
+							{$v.value|string_format:"%d"}
+						{else}
 							{$v.value}
+						{/if}
 						</td>
 						<td>
 							{$v.uses}
