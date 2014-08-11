@@ -202,6 +202,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 			$dec_type = base64_decode( $enc_type );
 			list( $atype, $arecurring, $avalue, $acycles, $aappliesto, $aexpirationdate, $amaxuses, $aapplyonce, $anewsignups, $aexistingclient ) = explode( "@", $dec_type );
 			$data = select_query( 'tblpromotions', 'id', array( 'code' => $code ) );
+			$couponconfig = select_query( "tblaffcouponsconf", "*", array() );
 			if ( ! mysql_num_rows( $data ) ) {
 				insert_query( "tblpromotions", array(
 					"code"           => $code,
@@ -280,7 +281,9 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	protected function check_redirect() {
 
 		$affid = filter_input( INPUT_GET, 'affid', FILTER_SANITIZE_NUMBER_INT );
-		$r     = select_query( "tblaffcouponslanding", "landing", array( "aff_id" => $affid ) );
+		if( ! $affid ) return false;
+
+		$r = select_query( "tblaffcouponslanding", "landing", array( "aff_id" => $affid ) );
 		$data  = mysql_fetch_array( $r );
 		if ( ! empty( $data[ 'landing' ] ) ) return $data[ 'landing' ];
 
