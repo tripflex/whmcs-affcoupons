@@ -243,7 +243,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('vendor', ['concat:vendorcss', 'concat:vendorjs', 'cssmin:vendor', 'uglify:vendor']);
 	grunt.registerTask('core', ['less:core','concat:corecss', 'concat:corejs', 'cssmin:core', 'uglify:core']);
 
-	grunt.registerTask('deploy', ['less', 'concat', 'cssmin', 'uglify', 'clean:deploy', 'copy:deploy', 'addtextdomain', 'makepot', 'compress', 'replace:deploy']);
+	grunt.registerTask('deploy', ['less', 'concat', 'cssmin', 'uglify', 'clean:deploy', 'copy:deploy', 'compress', 'replace:deploy']);
 
 
 };
