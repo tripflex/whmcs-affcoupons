@@ -12,62 +12,64 @@
  * @link         @@link
  */
 
-if (!defined("WHMCS"))
-	die("This file cannot be accessed directly");
-
-define( 'AC_ROOT', dirname( __FILE__ ) );
+if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
 
 class AffiliateCoupons_AdminArea extends AffiliateCoupons {
 
-	protected static $instance = null;
+	protected static $instance = NULL;
+
+	function __construct() {
+
+		define( "ADMINAREA", TRUE );
+
+	}
+
+	public function footer( $vars ) {
+
+		return '';
+	}
+
+	public function head( $vars ) {
+
+		return '';
+	}
+
+	public function header( $vars ) {
+
+		return '';
+	}
+
+	public function output( $vars ) {
+
+//        required for config.php file
+		$modulelink = $vars[ 'modulelink' ];
+		$page       = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING );
+		$module     = filter_input( INPUT_GET, 'module', FILTER_SANITIZE_STRING );
+
+		$update = AC_WHMCSe::output_update( AffiliateCoupons::VERSION_URL, AffiliateCoupons::VERSION, 'Affiliate Coupons' );
+
+		if ( $update ) echo $update;
+
+		if ( $page && $module == 'affcoupons' ) {
+
+			include_once( AC_ROOT . "/pages/" . $page . ".php" );
+
+		} else {
+
+			require_once( AC_ROOT . "/pages/default.php" );
+
+		}
+
+	}
 
 	public static function get_instance() {
 
 		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
+		if ( NULL == self::$instance ) {
 			self::$instance = new self;
 		}
 
 		return self::$instance;
-	}
-
-	function __construct(){
-		define("ADMINAREA", true);
-	}
-
-	public function output($vars){
-//        required for config.php file
-        $modulelink = $vars['modulelink'];
-		$update = AC_WHMCSe::output_update( AffiliateCoupons::version_url, AffiliateCoupons::$version, 'Affiliate Coupons' );
-        if($update){
-	        echo $update;
-        }
-		if($_GET['page'] === 'test'):
-			include_once( dirname( __FILE__ ) . "/pages/test.php" );
-		else:
-			require_once( dirname( __FILE__ ) . "/pages/config.php" );
-
-		endif;
-	}
-
-    public static function check_for_update(){
-        $url = 'https://github.com/tripflex/whmcs-affcoupons/raw/master/release';
-        $release = file_get_contents($url, "r");
-        if (intval($release) > intval(parent::$version)){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-	public function footer($vars){
-		return '';
-	}
-	public function head($vars){
-		return '';
-	}
-	public function header($vars){
-		return '';
 	}
 
 }
