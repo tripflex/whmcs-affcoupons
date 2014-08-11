@@ -12,10 +12,11 @@
  * @link         @@link
  */
 
-if (!defined("WHMCS"))
-	die("This file cannot be accessed directly");
+if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
+if ( ! defined( 'AC_ROOT' ) ) define( 'AC_ROOT', dirname( __FILE__ ) );
 
 require_once( dirname( __FILE__ ) . "/classes/class-affiliatecoupons.php" );
+require_once( dirname( __FILE__ ) . "/includes/ac-whmcse.php" );
 
 /**
  * Configuration

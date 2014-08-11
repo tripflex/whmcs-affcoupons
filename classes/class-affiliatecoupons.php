@@ -13,12 +13,11 @@
  */
 
 if ( ! defined( "WHMCS" ) ) die( "This file cannot be accessed directly" );
-if ( ! defined( 'AC_ROOT' ) ) define( 'AC_ROOT', dirname( __FILE__ ) );
+if ( ! defined( 'AC_CLASS_ROOT' ) ) define( 'AC_CLASS_ROOT', dirname( __FILE__ ) );
 
-require_once( AC_ROOT . "/classes/class-affiliatecoupons-clientarea.php" );
-require_once( AC_ROOT . "/classes/class-affiliatecoupons-adminarea.php" );
-require_once( AC_ROOT . "/classes/class-affiliatecoupons-sidebar.php" );
-require_once( AC_ROOT . "/includes/ac-whmcse.php" );
+require_once( AC_CLASS_ROOT . "/class-affiliatecoupons-clientarea.php" );
+require_once( AC_CLASS_ROOT . "/class-affiliatecoupons-adminarea.php" );
+require_once( AC_CLASS_ROOT . "/class-affiliatecoupons-sidebar.php" );
 
 class AffiliateCoupons {
 
@@ -56,7 +55,7 @@ class AffiliateCoupons {
 		$this->$debug = $value;
 	}
 
-	public function upgrade( $vars ) {
+	public static function upgrade( $vars ) {
 
 		$version = $vars[ 'version' ];
 
