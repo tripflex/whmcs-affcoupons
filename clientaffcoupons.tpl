@@ -52,7 +52,7 @@
 					</td>
 					<td>
 					{if $v.type == "Percentage"}
-						{$v.value|string_format:"%d"}
+						{$v.value|string_format:"%d"}%
 					{else}
 						{$v.value}
 					{/if}
