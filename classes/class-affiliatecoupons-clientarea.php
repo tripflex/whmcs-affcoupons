@@ -273,8 +273,8 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 		$redirect = $this->check_redirect();
 		if ( $redirect ) return "<script>window.location.replace('" . $redirect . "');</script>";
 
-		$return_html = '<link href="' . $this->url . '/assets/css/vendor.min.css" rel="stylesheet">';
-		$return_html .= '<link href="' . $this->url . '/assets/css/clientarea.min.css" rel="stylesheet">';
+		$return_html = '<link href="' . $this->url . '/assets/css/vendor.min.css" rel="stylesheet" media="all">';
+		$return_html .= '<link href="' . $this->url . '/assets/css/clientarea.min.css" rel="stylesheet" media="all">';
 
 		return $return_html;
 	}
@@ -314,6 +314,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 				'avail_coupon' => $this->avail_coupon,
 				'notice'       => $this->notice,
 				'notice_type'  => $this->notice_type,
+				'url'          => $this->url,
 				'index_page'   => $this->get_index_page()
 			),
 		);
