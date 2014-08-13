@@ -7,7 +7,7 @@
  * @copyright    Copyright (c) Myles McNamara 2014
  * @license      GNU GPL v3+
  * @version      2.2.0
- * @updated      Mon Aug 11 2014 11:13:12
+ * @updated      Mon Aug 11 2014 12:33:56
  *
  * @link         https://github.com/tripflex/whmcs-affcoupons
  */

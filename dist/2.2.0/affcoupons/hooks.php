@@ -7,7 +7,7 @@
  * @copyright    Copyright (c) Myles McNamara 2014
  * @license      GNU GPL v3+
  * @version      2.2.0
- * @updated      Mon Aug 11 2014 11:13:12
+ * @updated      Mon Aug 11 2014 12:33:56
  *
  * @link         https://github.com/tripflex/whmcs-affcoupons
  */
@@ -28,6 +28,11 @@ function affcoupons_set_affiliate_cookie( $vars ) {
 function affcoupons_admin_footer( $vars ) {
 
 	return AffiliateCoupons::AdminArea()->footer( $vars );
+}
+
+function affcoupons_client_footer( $vars ) {
+
+	return AffiliateCoupons::ClientArea()->footer( $vars );
 }
 
 function affcoupons_admin_header( $vars ) {
@@ -68,4 +73,5 @@ add_hook( "AdminAreaHeadOutput", 1, "affcoupons_admin_head" );
 // Runs when loading any client area page and can be used to define additional HTML output within the <head> section of the page.
 add_hook( "ClientAreaHeadOutput", 1, "affcoupons_client_head" );
 
-?>
+// Output immediately before the closing </body> tag of the page.
+add_hook( "ClientAreaFooterOutput", 1, "affcoupons_client_footer" );

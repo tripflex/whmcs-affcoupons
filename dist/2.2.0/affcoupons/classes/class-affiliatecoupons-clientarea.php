@@ -7,7 +7,7 @@
  * @copyright    Copyright (c) Myles McNamara 2014
  * @license      GNU GPL v3+
  * @version      2.2.0
- * @updated      Mon Aug 11 2014 11:13:12
+ * @updated      Mon Aug 11 2014 12:33:56
  *
  * @link         https://github.com/tripflex/whmcs-affcoupons
  */
@@ -271,7 +271,15 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 	public function head( $vars ) {
 
 		$redirect = $this->check_redirect();
-		if ( $redirect ) return "<script>window.location.replace('" . $redirect . "');</script>";
+		if ( $redirect ) return "<script type='text/javascript'>window.location.replace('" . $redirect . "');</script>";
+
+		$return_html = '<link href="' . $this->url . '/assets/css/vendor.min.css" rel="stylesheet" media="all">';
+		$return_html .= '<link href="' . $this->url . '/assets/css/clientarea.min.css" rel="stylesheet" media="all">';
+
+		return $return_html;
+	}
+
+	public function footer( $vars ){
 
 		$return_html = '<script src="' . $this->url . '/assets/js/clientarea.min.js"></script>';
 
@@ -306,6 +314,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 				'avail_coupon' => $this->avail_coupon,
 				'notice'       => $this->notice,
 				'notice_type'  => $this->notice_type,
+				'url'          => $this->url,
 				'index_page'   => $this->get_index_page()
 			),
 		);
