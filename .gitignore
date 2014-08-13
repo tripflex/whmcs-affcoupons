@@ -1,0 +1,4 @@
+/.idea/
+sftp-config.json
+/deploy/
+/node_modules/

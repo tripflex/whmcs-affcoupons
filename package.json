@@ -1,0 +1,29 @@
+{
+  "name": "affcoupons",
+  "title": "WHMCS Affiliate Coupons",
+  "package": "WHMCS 5.2.1+",
+  "acronym": "ac",
+  "version": "2.2.0",
+  "link": "https://github.com/tripflex/whmcs-affcoupons",
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-autoprefixer": "^1.0.0",
+    "grunt-contrib-clean": "0.5.x",
+    "grunt-contrib-compress": "~0.10.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-less": "~0.9.0",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-replace": "~0.7.8",
+    "grunt-shell": "~0.6.4",
+    "grunt-wp-i18n": "~0.4.5",
+    "load-grunt-tasks": "^0.6.0"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.1.0"
+  }
+}
