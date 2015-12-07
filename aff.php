@@ -9,8 +9,10 @@
  * @license    GNU GPL v3+
  * @version    2.1.1
  * @link       https://gh.smyl.es/whmcs-affcoupons
- * 
+ *
  */
+
+ use WHMCS\Cookie;
 
 define("CLIENTAREA",true);
 
@@ -19,7 +21,7 @@ require("init.php");
 // if affiliate id is present, update visitor count & set cookie
 if ($aff = $whmcs->get_req_var('aff')) {
 	update_query("tblaffiliates",array("visitors"=>"+1"),array("id"=>$aff));
-    WHMCS_Cookie::set('AffiliateID',$aff,'3m');
+    Cookie::set('AffiliateID',$aff,'3m');
 }
 
 // if product id passed in, redirect to order form
