@@ -13,6 +13,7 @@
  * @Last Modified time: 2014-03-23 02:21:45
  */
 
+use WHMCS\Cookie;
 if (!defined("WHMCS"))
 	die("This file cannot be accessed directly");
 
@@ -45,10 +46,10 @@ function affcoupons_set_affiliate_cookie($vars) {
 			if (mysql_num_rows($pdata)) {
 				$prow = mysql_fetch_array($pdata);
 				$affid = $prow[0];
-				$checkcookie = WHMCS_Cookie::get("AffiliateID", true);
+				$checkcookie = Cookie::get("AffiliateID", true);
 				if($affid){
 					// update_query("tblaffiliates",array("visitors"=>"+1"),array("id"=>$affid));
-    				WHMCS_Cookie::set('AffiliateID',$affid,'3m');
+    				Cookie::set('AffiliateID',$affid,'3m');
 				}
 			}
 		}
