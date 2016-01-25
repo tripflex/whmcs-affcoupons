@@ -186,7 +186,7 @@ class AffiliateCoupons_ClientArea extends AffiliateCoupons {
 
 		// Check if landing URL was sent in POST first, meaning the update button was pressed
 		if ( isset( $_POST['landing'] ) ) {
-			$landing_sanitized = filter_input( INPUT_POST, 'landing', FILTER_SANITIZE_URL );
+			$landing_sanitized = filter_input( INPUT_POST, 'landing', FILTER_SANITIZE_STRING );
 			$landing_validated = filter_var( $landing_sanitized, FILTER_VALIDATE_URL );
 			if ( $landing_validated ) {
 				$landing = $landing_validated;
