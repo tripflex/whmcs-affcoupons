@@ -12,6 +12,8 @@ Starting with version >= 2.1.0 is a complete rewrite of the code base.
 
 **MAKE SURE TO FOLLOW INSTRUCTIONS IF YOU ALREADY HAVE INSTALLED AN OLDER VERSION**
 
+THIS PROJECT IS NO LONGER MAINTAINED OR UPDATED, PLEASE FEEL FREE TO FORK AS LONG AS YOU MAINTAIN LICENSE
+
 ## Description
 This module will allow coupon codes to be used instead of affiliate URLs
 for granting referrals to your affiliates. This is handy for affiliates who
