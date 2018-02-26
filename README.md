@@ -2,6 +2,12 @@
 * Current Stable Version: 2.1.2
 * Author: Myles McNamara (get@smyl.es)
 
+Forked from Affiliate Coupons 1.2
+-----
+Affiliate Coupons 1.2 - WHMCS Module
+Written by: Frank Laszlo <frank@asmallorange.com>
+License: SEE LICENSE FILE
+
 Starting with version >= 2.1.0 is a complete rewrite of the code base.
 
 **MAKE SURE TO FOLLOW INSTRUCTIONS IF YOU ALREADY HAVE INSTALLED AN OLDER VERSION**
