@@ -43,12 +43,13 @@ function affcoupons_set_affiliate_cookie($vars) {
 			$couponid = $row[0];
 			$pdata = select_query('tblaffcoupons', 'aff_id', array("coupon"=>$couponid));
 			if (mysql_num_rows($pdata)) {
+				use WHMCS\Cookie;
 				$prow = mysql_fetch_array($pdata);
 				$affid = $prow[0];
-				$checkcookie = WHMCS_Cookie::get("AffiliateID", true);
+				$checkcookie = Cookie::get("AffiliateID", true);
 				if($affid){
 					// update_query("tblaffiliates",array("visitors"=>"+1"),array("id"=>$affid));
-    				WHMCS_Cookie::set('AffiliateID',$affid,'3m');
+    					Cookie::set('AffiliateID',$affid,'3m');
 				}
 			}
 		}
